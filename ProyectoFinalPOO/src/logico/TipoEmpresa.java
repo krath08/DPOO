@@ -1,0 +1,5 @@
+package logico;
+
+public enum TipoEmpresa {
+    TURISMO, SALUD, EDUCACION, TECNOLOGIA, CONSTRUCCION, COMERCIO, INDUSTRIA, SERVICIOS
+}
