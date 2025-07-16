@@ -14,7 +14,7 @@ public class VentanaPrincipal extends JFrame {
     private DefaultTableModel modeloTabla;
 
     public VentanaPrincipal() {
-        setTitle("Sistema Bolsa Laboral - Ventana Principal");
+        setTitle("Sistema de Bolsa Laboral - Ventana Principal");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(794, 612);
         setLocationRelativeTo(null);
