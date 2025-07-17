@@ -1,7 +1,9 @@
+package visual;
+
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.JMenuItem;
 public class VentanaPrincipal extends JFrame {
 
 
@@ -24,7 +26,16 @@ public class VentanaPrincipal extends JFrame {
         setJMenuBar(menuBar);
 
         menuBar.add(new JMenu("Archivo"));
-        menuBar.add(new JMenu("Candidatos"));
+        JMenu menuCandidatos = new JMenu("Candidatos");
+        menuBar.add(menuCandidatos);
+
+        JMenuItem itemRegistrarCandidato = new JMenuItem("Registrar Candidato");
+        menuCandidatos.add(itemRegistrarCandidato);
+
+        itemRegistrarCandidato.addActionListener(e -> {
+            RegCandidato ventana = new RegCandidato();
+            ventana.setVisible(true);
+        });        
         menuBar.add(new JMenu("Empresas"));
         menuBar.add(new JMenu("Vacantes"));
         menuBar.add(new JMenu("Postulaciones"));
@@ -52,6 +63,10 @@ public class VentanaPrincipal extends JFrame {
         panelAcciones.setLayout(new GridLayout(4, 1, 10, 10));
 
         JButton btnRegistrarCandidato = new JButton("Registrar Nuevo Candidato");
+        btnRegistrarCandidato.addActionListener(e -> {
+            RegCandidato ventana = new RegCandidato();
+            ventana.setVisible(true);
+        });
         JButton btnBuscarCandidatos = new JButton("Buscar Candidatos");
         JButton btnVerVacantes = new JButton("Ver Vacantes Activas");
         JButton btnReporteMensual = new JButton("Generar Reporte Mensual");
@@ -100,7 +115,6 @@ public class VentanaPrincipal extends JFrame {
             VentanaPrincipal ventana = new VentanaPrincipal();
             ventana.setVisible(true);
 
-            // Ejemplo de cómo llenar datos (puedes borrar esto)
             ventana.setCandidatosRegistrados(0);
             ventana.setEmpresasActivas(0);
             ventana.setVacantesAbiertas(0);
