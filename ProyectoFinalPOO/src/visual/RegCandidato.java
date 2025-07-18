@@ -15,7 +15,7 @@ public class RegCandidato extends JFrame {
     private JComboBox<String> comboTipoCandidato;
 
     public RegCandidato() {
-        setTitle("Registrar Nuevo Candidato");
+        setTitle("Registrar Candidato");
         setSize(400, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

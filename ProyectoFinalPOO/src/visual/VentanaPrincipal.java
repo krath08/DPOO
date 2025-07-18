@@ -36,7 +36,17 @@ public class VentanaPrincipal extends JFrame {
             RegCandidato ventana = new RegCandidato();
             ventana.setVisible(true);
         });        
-        menuBar.add(new JMenu("Empresas"));
+        JMenu menuEmpresa = new JMenu("Empresa");
+        
+        menuBar.add(menuEmpresa);
+        
+        JMenuItem itemRegistrarEmpresa = new JMenuItem("Registrar Empresa");
+        menuEmpresa.add(itemRegistrarEmpresa);
+
+        itemRegistrarEmpresa.addActionListener(e -> {
+            RegEmpresa ventana = new RegEmpresa();
+            ventana.setVisible(true);
+        });        
         menuBar.add(new JMenu("Vacantes"));
         menuBar.add(new JMenu("Postulaciones"));
         menuBar.add(new JMenu("Reportes"));
