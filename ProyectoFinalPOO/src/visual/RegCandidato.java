@@ -11,90 +11,140 @@ public class RegCandidato extends JFrame {
     private JTextField txtTelefono;
     private JTextField txtDireccion;
     private JTextField txtEmail;
-    private JTextField txtFechaNacimiento;
+    // Ya no se usa txtFechaNacimiento
+
     private JComboBox<String> comboTipoCandidato;
+
+    // Spinners para la fecha de nacimiento
+    private JSpinner spinnerDia;
+    private JSpinner spinnerMes;
+    private JComboBox<Integer> comboAnio; // <<--- ComboBox para año
 
     private VentanaPrincipal ventanaPrincipal; // <<--- AGREGADO
 
-    // Cambia el constructor para recibir la referencia:
     public RegCandidato(VentanaPrincipal ventanaPrincipal) {
-        this.ventanaPrincipal = ventanaPrincipal; // <<--- AGREGADO
+        this.ventanaPrincipal = ventanaPrincipal;
 
         setTitle("Registrar Candidato");
-        setSize(400, 500);
+        setIconImage(new ImageIcon(getClass().getResource("/imagen/IconoRegCandi.png")).getImage());
+        setSize(474, 589);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLayout(null);
+        getContentPane().setLayout(null);
 
         JLabel lblNombre = new JLabel("Nombre:");
-        lblNombre.setBounds(30, 20, 100, 25);
-        add(lblNombre);
+        lblNombre.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblNombre.setBounds(30, 33, 100, 25);
+        getContentPane().add(lblNombre);
 
         txtNombre = new JTextField();
-        txtNombre.setBounds(150, 20, 200, 25);
-        add(txtNombre);
+        txtNombre.setBounds(112, 34, 200, 25);
+        getContentPane().add(txtNombre);
 
         JLabel lblApellido = new JLabel("Apellido:");
-        lblApellido.setBounds(30, 60, 100, 25);
-        add(lblApellido);
+        lblApellido.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblApellido.setBounds(30, 91, 100, 25);
+        getContentPane().add(lblApellido);
 
         txtApellido = new JTextField();
-        txtApellido.setBounds(150, 60, 200, 25);
-        add(txtApellido);
+        txtApellido.setBounds(112, 92, 200, 25);
+        getContentPane().add(txtApellido);
 
         JLabel lblCedula = new JLabel("Cédula:");
-        lblCedula.setBounds(30, 100, 100, 25);
-        add(lblCedula);
+        lblCedula.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblCedula.setBounds(30, 149, 100, 25);
+        getContentPane().add(lblCedula);
 
         txtCedula = new JTextField();
-        txtCedula.setBounds(150, 100, 200, 25);
-        add(txtCedula);
+        txtCedula.setBounds(112, 150, 200, 25);
+        getContentPane().add(txtCedula);
 
         JLabel lblTelefono = new JLabel("Teléfono:");
-        lblTelefono.setBounds(30, 140, 100, 25);
-        add(lblTelefono);
+        lblTelefono.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblTelefono.setBounds(30, 207, 100, 25);
+        getContentPane().add(lblTelefono);
 
         txtTelefono = new JTextField();
-        txtTelefono.setBounds(150, 140, 200, 25);
-        add(txtTelefono);
+        txtTelefono.setBounds(112, 208, 200, 25);
+        getContentPane().add(txtTelefono);
 
         JLabel lblDireccion = new JLabel("Dirección:");
-        lblDireccion.setBounds(30, 180, 100, 25);
-        add(lblDireccion);
+        lblDireccion.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblDireccion.setBounds(30, 265, 100, 25);
+        getContentPane().add(lblDireccion);
 
         txtDireccion = new JTextField();
-        txtDireccion.setBounds(150, 180, 200, 25);
-        add(txtDireccion);
+        txtDireccion.setBounds(112, 266, 274, 25);
+        getContentPane().add(txtDireccion);
 
         JLabel lblFechaNacimiento = new JLabel("Fecha Nacimiento:");
-        lblFechaNacimiento.setBounds(30, 220, 120, 25);
-        add(lblFechaNacimiento);
+        lblFechaNacimiento.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblFechaNacimiento.setBounds(30, 323, 144, 25);
+        getContentPane().add(lblFechaNacimiento);
 
-        txtFechaNacimiento = new JTextField("dd/mm/aaaa"); 
-        txtFechaNacimiento.setBounds(150, 220, 200, 25);
-        add(txtFechaNacimiento);
+        // Día y mes como spinner
+        spinnerDia = new JSpinner(new SpinnerNumberModel(1, 1, 31, 1));
+        spinnerDia.setBounds(186, 323, 50, 25);
+        getContentPane().add(spinnerDia);
+
+        spinnerMes = new JSpinner(new SpinnerNumberModel(1, 1, 12, 1));
+        spinnerMes.setBounds(241, 323, 50, 25);
+        getContentPane().add(spinnerMes);
+
+        // Año como ComboBox (de 1965 a actual)
+        int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+        comboAnio = new JComboBox<>();
+        for (int y = currentYear; y >= 1965; y--) {
+            comboAnio.addItem(y);
+        }
+        comboAnio.setBounds(296, 323, 90, 25);
+        getContentPane().add(comboAnio);
+
+        // Labels para los campos de fecha
+        JLabel lblDia = new JLabel("Día");
+        lblDia.setFont(new Font("SansSerif", Font.PLAIN, 11));
+        lblDia.setBounds(186, 305, 30, 15);
+        getContentPane().add(lblDia);
+
+        JLabel lblMes = new JLabel("Mes");
+        lblMes.setFont(new Font("SansSerif", Font.PLAIN, 11));
+        lblMes.setBounds(241, 305, 30, 15);
+        getContentPane().add(lblMes);
+
+        JLabel lblAnio = new JLabel("Año");
+        lblAnio.setFont(new Font("SansSerif", Font.PLAIN, 11));
+        lblAnio.setBounds(296, 305, 30, 15);
+        getContentPane().add(lblAnio);
 
         JLabel lblTipo = new JLabel("Tipo Candidato:");
-        lblTipo.setBounds(30, 260, 120, 25);
-        add(lblTipo);
+        lblTipo.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblTipo.setBounds(30, 381, 120, 25);
+        getContentPane().add(lblTipo);
 
-        comboTipoCandidato = new JComboBox<>(new String[] {
-            "Universitario", "Técnico Superior", "Obrero"
-        });
-        comboTipoCandidato.setBounds(150, 260, 200, 25);
-        add(comboTipoCandidato);
+        comboTipoCandidato = new JComboBox(new String[] { "Universitario", "Técnico Superior", "Obrero" });
+        comboTipoCandidato.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        comboTipoCandidato.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Universitario", "T\u00E9cnico Superior", "Obrero"}));
+        comboTipoCandidato.setBounds(186, 381, 200, 25);
+        getContentPane().add(comboTipoCandidato);
 
         JLabel lblEmail = new JLabel("Email:");
-        lblEmail.setBounds(30, 300, 100, 25);
-        add(lblEmail);
+        lblEmail.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblEmail.setBounds(30, 439, 100, 25);
+        getContentPane().add(lblEmail);
 
         txtEmail = new JTextField();
-        txtEmail.setBounds(150, 300, 200, 25);
-        add(txtEmail);
+        txtEmail.setBounds(186, 440, 200, 25);
+        getContentPane().add(txtEmail);
 
         JButton btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(150, 360, 100, 30);
-        add(btnGuardar);
+        btnGuardar.setFont(new Font("SansSerif", Font.BOLD, 14));
+        btnGuardar.setBounds(344, 499, 100, 30);
+        getContentPane().add(btnGuardar);
+
+        JLabel lblNewLabel = new JLabel("");
+        lblNewLabel.setIcon(new ImageIcon(RegCandidato.class.getResource("/imagen/ImagenRegCandi.png")));
+        lblNewLabel.setBounds(340, 29, 90, 106);
+        getContentPane().add(lblNewLabel);
 
         btnGuardar.addActionListener(e -> {
             // Lee datos comunes del formulario
@@ -106,14 +156,14 @@ public class RegCandidato extends JFrame {
             String email = txtEmail.getText();
             String direccion = txtDireccion.getText();
 
-            // Parsear fecha de nacimiento
-            java.util.Date fechaNacimiento;
-            try {
-                fechaNacimiento = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(txtFechaNacimiento.getText());
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Fecha de nacimiento inválida. Usa el formato dd/mm/aaaa");
-                return;
-            }
+            // Lee fecha de nacimiento de los spinners y combo
+            int dia = (int) spinnerDia.getValue();
+            int mes = (int) spinnerMes.getValue();
+            int anio = (int) comboAnio.getSelectedItem();
+
+            java.util.Calendar cal = java.util.Calendar.getInstance();
+            cal.set(anio, mes - 1, dia); // mes va de 0 a 11 en Calendar
+            java.util.Date fechaNacimiento = cal.getTime();
 
             java.util.Date fechaRegistro = new java.util.Date();
 
@@ -123,7 +173,6 @@ public class RegCandidato extends JFrame {
             logico.Candidato candidato = null;
 
             if (tipo.equals("Universitario")) {
-                // Puedes pedir estos campos en el futuro, por ahora usa valores por defecto
                 candidato = new logico.Universitario(
                     id, nombre, apellido, cedula, telefono, email, direccion,
                     fechaNacimiento, fechaRegistro,
@@ -151,7 +200,6 @@ public class RegCandidato extends JFrame {
                 dispose();
             }
         });
-
 
     }
 }

@@ -1,64 +1,77 @@
 package logico;
 
 import java.util.Date;
+import java.util.List;
 
 public class Vacante {
-	private String id;
-	private String titulo;
-	private String descripcion;
-	private String requisitos;
-	private double salario;
-	private Date fechaPublicacion;
-	private Date fechaVencimiento;
-	private boolean activa;
-	private empresa empresa;
+    private String id;
+    private String titulo;
+    private String descripcion;
+    private List<String> requisitos; // Ahora es una lista de strings
+    private double salario;
+    private empresa empresa; // Empresa que publica la vacante
+    private Date fechaPublicacion;
+    private boolean abierta;
+    private TipoEmpleo tipoEmpleo; // Enum definido aparte
+    private int experienciaRequerida; // en años
 
-	public Vacante(String id, String titulo, String descripcion, String requisitos, double salario,
-			Date fechaPublicacion, Date fechaVencimiento, boolean activa, empresa empresa) {
-		this.id = id;
-		this.titulo = titulo;
-		this.descripcion = descripcion;
-		this.requisitos = requisitos;
-		this.salario = salario;
-		this.fechaPublicacion = fechaPublicacion;
-		this.fechaVencimiento = fechaVencimiento;
-		this.activa = activa;
-		this.empresa = empresa;
-	}
+    public Vacante(String id, String titulo, String descripcion, List<String> requisitos, double salario,
+                   empresa empresa, Date fechaPublicacion, boolean abierta, TipoEmpleo tipoEmpleo, int experienciaRequerida) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.requisitos = requisitos;
+        this.salario = salario;
+        this.empresa = empresa;
+        this.fechaPublicacion = fechaPublicacion;
+        this.abierta = abierta;
+        this.tipoEmpleo = tipoEmpleo;
+        this.experienciaRequerida = experienciaRequerida;
+    }
 
-	public String getId() {
-		return id;
-	}
+    // Getters y setters
 
-	public String getTitulo() {
-		return titulo;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getDescripcion() {
-		return descripcion;
-	}
+    public String getTitulo() {
+        return titulo;
+    }
 
-	public String getRequisitos() {
-		return requisitos;
-	}
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-	public double getSalario() {
-		return salario;
-	}
+    public List<String> getRequisitos() {
+        return requisitos;
+    }
 
-	public Date getFechaPublicacion() {
-		return fechaPublicacion;
-	}
+    public double getSalario() {
+        return salario;
+    }
 
-	public Date getFechaVencimiento() {
-		return fechaVencimiento;
-	}
+    public empresa getEmpresa() {
+        return empresa;
+    }
 
-	public boolean isActiva() {
-		return activa;
-	}
+    public Date getFechaPublicacion() {
+        return fechaPublicacion;
+    }
 
-	public empresa getempresa() {
-		return empresa;
-	}
+    public boolean isAbierta() {
+        return abierta;
+    }
+
+    public void setAbierta(boolean abierta) {
+        this.abierta = abierta;
+    }
+
+    public TipoEmpleo getTipoEmpleo() {
+        return tipoEmpleo;
+    }
+
+    public int getExperienciaRequerida() {
+        return experienciaRequerida;
+    }
 }

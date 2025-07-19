@@ -1,11 +1,14 @@
 package visual;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.Font;
 
 public class RegEmpresa extends JFrame {
 
@@ -23,75 +26,96 @@ public class RegEmpresa extends JFrame {
         this.ventanaPrincipal = ventanaPrincipal;
 
         setTitle("Registrar Empresa");
-        setSize(400, 500);
+        setIconImage(new ImageIcon(getClass().getResource("/imagen/IconoRegEmpresa.png")).getImage());
+        setSize(529, 627);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLayout(null);
+        getContentPane().setLayout(null);
 
         JLabel lblId = new JLabel("Id:");
-        lblId.setBounds(30, 20, 100, 25);
-        add(lblId);
+        lblId.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblId.setBounds(30, 45, 100, 25);
+        getContentPane().add(lblId);
 
         txtId = new JTextField();
-        txtId.setBounds(150, 20, 200, 25);
-        add(txtId);
+        txtId.setBounds(157, 45, 200, 25);
+        getContentPane().add(txtId);
 
         JLabel lblNombre = new JLabel("Nombre:");
-        lblNombre.setBounds(30, 60, 100, 25);
-        add(lblNombre);
+        lblNombre.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblNombre.setBounds(30, 115, 100, 25);
+        getContentPane().add(lblNombre);
 
         txtNombre = new JTextField();
-        txtNombre.setBounds(150, 60, 200, 25);
-        add(txtNombre);
+        txtNombre.setBounds(157, 115, 200, 25);
+        getContentPane().add(txtNombre);
 
         JLabel lblTelefono = new JLabel("Teléfono:");
-        lblTelefono.setBounds(30, 100, 100, 25);
-        add(lblTelefono);
+        lblTelefono.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblTelefono.setBounds(30, 185, 100, 25);
+        getContentPane().add(lblTelefono);
 
         txtTelefono = new JTextField();
-        txtTelefono.setBounds(150, 100, 200, 25);
-        add(txtTelefono);
+        txtTelefono.setBounds(157, 185, 200, 25);
+        getContentPane().add(txtTelefono);
 
         JLabel lblDireccion = new JLabel("Dirección:");
-        lblDireccion.setBounds(30, 140, 100, 25);
-        add(lblDireccion);
+        lblDireccion.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblDireccion.setBounds(30, 255, 100, 25);
+        getContentPane().add(lblDireccion);
 
         txtDireccion = new JTextField();
-        txtDireccion.setBounds(150, 140, 200, 25);
-        add(txtDireccion);
+        txtDireccion.setBounds(157, 255, 200, 25);
+        getContentPane().add(txtDireccion);
 
         JLabel lblFechaRegistro = new JLabel("Fecha Registro:");
-        lblFechaRegistro.setBounds(30, 180, 120, 25);
-        add(lblFechaRegistro);
+        lblFechaRegistro.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblFechaRegistro.setBounds(30, 325, 120, 25);
+        getContentPane().add(lblFechaRegistro);
 
-        txtFechaRegistro = new JTextField("dd/mm/aaaa"); 
-        txtFechaRegistro.setBounds(150, 180, 200, 25);
-        add(txtFechaRegistro);
+        txtFechaRegistro = new JTextField(); 
+        txtFechaRegistro.setFont(new Font("SansSerif", Font.ITALIC, 14));
+        txtFechaRegistro.setBounds(157, 325, 200, 25);
+        // --- Aquí asignas la fecha actual ---
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+        txtFechaRegistro.setText(sdf.format(new java.util.Date()));
+        txtFechaRegistro.setEditable(false); // No editable por el usuario
+        getContentPane().add(txtFechaRegistro);
 
         JLabel lblTipo = new JLabel("Tipo empresa:");
-        lblTipo.setBounds(30, 220, 120, 25);
-        add(lblTipo);
+        lblTipo.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblTipo.setBounds(30, 395, 120, 25);
+        getContentPane().add(lblTipo);
 
-        comboTipoEmpresa = new JComboBox<>(new String[] {
-            "Turismo", "Salud", "Educacion", "Tecnologia", "Construccion", "Comercio", "Industria", "Servicios"
-        });
-        comboTipoEmpresa.setBounds(150, 220, 200, 25);
-        add(comboTipoEmpresa);
+        comboTipoEmpresa = new JComboBox(new String[] {
+                "Turismo", "Salud", "Educacion", "Tecnologia", "Construccion", "Comercio", "Industria", "Servicios"
+            });
+        comboTipoEmpresa.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        comboTipoEmpresa.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Turismo", "Salud", "Educacion", "Tecnologia", "Construccion", "Comercio", "Industria", "Servicios"}));
+        comboTipoEmpresa.setBounds(157, 395, 200, 25);
+        getContentPane().add(comboTipoEmpresa);
 
         JLabel lblEmail = new JLabel("Email:");
-        lblEmail.setBounds(30, 260, 100, 25);
-        add(lblEmail);
+        lblEmail.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblEmail.setBounds(30, 465, 100, 25);
+        getContentPane().add(lblEmail);
 
         txtEmail = new JTextField();
-        txtEmail.setBounds(150, 260, 200, 25);
-        add(txtEmail);
+        txtEmail.setBounds(157, 465, 200, 25);
+        getContentPane().add(txtEmail);
 
         JButton btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(150, 320, 100, 30);
-        add(btnGuardar);
+        btnGuardar.setFont(new Font("SansSerif", Font.BOLD, 14));
+        btnGuardar.setBounds(366, 527, 100, 30);
+        getContentPane().add(btnGuardar);
+
+        JLabel lblNewLabel = new JLabel("New label");
+        lblNewLabel.setIcon(new ImageIcon(RegEmpresa.class.getResource("/imagen/ImagenRegEmpresa.png")));
+        lblNewLabel.setBounds(392, 55, 100, 117);
+        getContentPane().add(lblNewLabel);
 
         btnGuardar.addActionListener(e -> {
-            // Parsea la fecha de registro
+            // Parsea la fecha de registro (ya está validada)
             java.util.Date fechaRegistro;
             try {
                 fechaRegistro = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(txtFechaRegistro.getText());
