@@ -14,7 +14,12 @@ public class RegCandidato extends JFrame {
     private JTextField txtFechaNacimiento;
     private JComboBox<String> comboTipoCandidato;
 
-    public RegCandidato() {
+    private VentanaPrincipal ventanaPrincipal; // <<--- AGREGADO
+
+    // Cambia el constructor para recibir la referencia:
+    public RegCandidato(VentanaPrincipal ventanaPrincipal) {
+        this.ventanaPrincipal = ventanaPrincipal; // <<--- AGREGADO
+
         setTitle("Registrar Candidato");
         setSize(400, 500);
         setLocationRelativeTo(null);
@@ -92,7 +97,61 @@ public class RegCandidato extends JFrame {
         add(btnGuardar);
 
         btnGuardar.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "El candidato ha sido guardado");
+            // Lee datos comunes del formulario
+            String id = txtCedula.getText();
+            String nombre = txtNombre.getText();
+            String apellido = txtApellido.getText();
+            String cedula = txtCedula.getText();
+            String telefono = txtTelefono.getText();
+            String email = txtEmail.getText();
+            String direccion = txtDireccion.getText();
+
+            // Parsear fecha de nacimiento
+            java.util.Date fechaNacimiento;
+            try {
+                fechaNacimiento = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(txtFechaNacimiento.getText());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Fecha de nacimiento inválida. Usa el formato dd/mm/aaaa");
+                return;
+            }
+
+            java.util.Date fechaRegistro = new java.util.Date();
+
+            // Verifica el tipo de candidato
+            String tipo = comboTipoCandidato.getSelectedItem().toString();
+
+            logico.Candidato candidato = null;
+
+            if (tipo.equals("Universitario")) {
+                // Puedes pedir estos campos en el futuro, por ahora usa valores por defecto
+                candidato = new logico.Universitario(
+                    id, nombre, apellido, cedula, telefono, email, direccion,
+                    fechaNacimiento, fechaRegistro,
+                    "Universidad", "Carrera", 2024, "Título", "Especialidad"
+                );
+            } else if (tipo.equals("Técnico Superior")) {
+                candidato = new logico.TecnicoSuperior(
+                    id, nombre, apellido, cedula, telefono, email, direccion,
+                    fechaNacimiento, fechaRegistro,
+                    "Instituto", "Especialidad", 2024, new java.util.ArrayList<>()
+                );
+            } else if (tipo.equals("Obrero")) {
+                candidato = new logico.Obrero(
+                    id, nombre, apellido, cedula, telefono, email, direccion,
+                    fechaNacimiento, fechaRegistro,
+                    "Oficio", 5, new java.util.ArrayList<>(), new java.util.ArrayList<>()
+                );
+            }
+
+            // Guarda el candidato en BolsaLaboral
+            if (candidato != null) {
+                logico.BolsaLaboral.getInstancia().agregarCandidato(candidato);
+                ventanaPrincipal.actualizarResumen();
+                JOptionPane.showMessageDialog(this, "El candidato ha sido guardado");
+                dispose();
+            }
         });
+
+
     }
 }

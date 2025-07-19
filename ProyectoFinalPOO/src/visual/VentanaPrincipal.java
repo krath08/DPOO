@@ -4,8 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JMenuItem;
-public class VentanaPrincipal extends JFrame {
+import logico.BolsaLaboral;
 
+public class VentanaPrincipal extends JFrame {
 
     private JLabel lblCandidatosRegistrados;
     private JLabel lblEmpresasActivas;
@@ -33,18 +34,16 @@ public class VentanaPrincipal extends JFrame {
         menuCandidatos.add(itemRegistrarCandidato);
 
         itemRegistrarCandidato.addActionListener(e -> {
-            RegCandidato ventana = new RegCandidato();
+            RegCandidato ventana = new RegCandidato(this); // MODIFICARÁS ESTO DESPUÉS
             ventana.setVisible(true);
         });        
         JMenu menuEmpresa = new JMenu("Empresa");
-        
         menuBar.add(menuEmpresa);
-        
         JMenuItem itemRegistrarEmpresa = new JMenuItem("Registrar Empresa");
         menuEmpresa.add(itemRegistrarEmpresa);
 
         itemRegistrarEmpresa.addActionListener(e -> {
-            RegEmpresa ventana = new RegEmpresa();
+            RegEmpresa ventana = new RegEmpresa(this); // MODIFICARÁS ESTO DESPUÉS
             ventana.setVisible(true);
         });        
         menuBar.add(new JMenu("Vacantes"));
@@ -74,7 +73,7 @@ public class VentanaPrincipal extends JFrame {
 
         JButton btnRegistrarCandidato = new JButton("Registrar Nuevo Candidato");
         btnRegistrarCandidato.addActionListener(e -> {
-            RegCandidato ventana = new RegCandidato();
+            RegCandidato ventana = new RegCandidato(this); // MODIFICARÁS ESTO DESPUÉS
             ventana.setVisible(true);
         });
         JButton btnBuscarCandidatos = new JButton("Buscar Candidatos");
@@ -98,6 +97,16 @@ public class VentanaPrincipal extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tablaPostulaciones);
         panelTabla.add(scrollPane, BorderLayout.CENTER);
         getContentPane().add(panelTabla);
+
+        // ------- ¡Aquí actualizas el resumen al iniciar! ---------
+        actualizarResumen();
+    }
+
+    public void actualizarResumen() {
+        setCandidatosRegistrados(BolsaLaboral.getInstancia().getCantidadCandidatos());
+        setEmpresasActivas(BolsaLaboral.getInstancia().getCantidadEmpresasActivas());
+        setVacantesAbiertas(BolsaLaboral.getInstancia().getCantidadVacantesAbiertas());
+        setPostulacionesPendientes(BolsaLaboral.getInstancia().getCantidadPostulacionesPendientes());
     }
 
     public void setCandidatosRegistrados(int cantidad) {
@@ -124,11 +133,7 @@ public class VentanaPrincipal extends JFrame {
         SwingUtilities.invokeLater(() -> {
             VentanaPrincipal ventana = new VentanaPrincipal();
             ventana.setVisible(true);
-
-            ventana.setCandidatosRegistrados(0);
-            ventana.setEmpresasActivas(0);
-            ventana.setVacantesAbiertas(0);
-            ventana.setPostulacionesPendientes(0);
+            // Ya no hace falta poner los valores iniciales a mano, se actualizan solos
         });
     }
 }
