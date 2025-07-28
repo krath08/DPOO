@@ -183,10 +183,4 @@ public class VentanaPrincipal extends JFrame {
     public void agregarPostulacion(String candidato, String empresa, String vacante, String fecha, String estado) {
         modeloTabla.addRow(new Object[]{candidato, empresa, vacante, fecha, estado});
     }
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            VentanaPrincipal ventana = new VentanaPrincipal();
-            ventana.setVisible(true);
-        });
-    }
 }
