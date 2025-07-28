@@ -115,7 +115,6 @@ public class RegEmpresa extends JFrame {
         getContentPane().add(lblNewLabel);
 
         btnGuardar.addActionListener(e -> {
-            // Parsea la fecha de registro (ya está validada)
             java.util.Date fechaRegistro;
             try {
                 fechaRegistro = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(txtFechaRegistro.getText());
@@ -124,7 +123,6 @@ public class RegEmpresa extends JFrame {
                 return;
             }
 
-            // Crea el objeto empresa
             logico.empresa nuevaEmpresa = new logico.empresa(
                 txtId.getText(),
                 txtNombre.getText(),
@@ -133,7 +131,7 @@ public class RegEmpresa extends JFrame {
                 txtTelefono.getText(),
                 txtEmail.getText(),
                 fechaRegistro,
-                true // o según tu lógica de activación
+                true 
             );
 
             logico.BolsaLaboral.getInstancia().agregarEmpresa(nuevaEmpresa);

@@ -15,7 +15,6 @@ public class VentanaPrincipal extends JFrame {
     private JTable tablaPostulaciones;
     private DefaultTableModel modeloTabla;
 
-    // Clase interna para fondo escalable
     class FondoPanel extends JPanel {
         private Image imagen;
         public FondoPanel(Image imagen) {
@@ -36,7 +35,6 @@ public class VentanaPrincipal extends JFrame {
         setSize(1000, 700);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        // Fondo directo (asegúrate que la imagen está en la carpeta correcta)
         Image imgFondo = new ImageIcon(getClass().getResource("/imagen/ImagenPrincipal.jpg")).getImage();
         FondoPanel fondoPanel = new FondoPanel(imgFondo);
         fondoPanel.setLayout(null);
@@ -161,7 +159,6 @@ public class VentanaPrincipal extends JFrame {
         panelTabla.add(scrollPane, BorderLayout.CENTER);
         fondoPanel.add(panelTabla);
 
-        // Actualiza resumen al iniciar
         actualizarResumen();
     }
 

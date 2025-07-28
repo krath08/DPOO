@@ -7,13 +7,13 @@ public class Vacante {
     private String id;
     private String titulo;
     private String descripcion;
-    private List<String> requisitos; // Ahora es una lista de strings
+    private List<String> requisitos; 
     private double salario;
-    private empresa empresa; // Empresa que publica la vacante
+    private empresa empresa;
     private Date fechaPublicacion;
     private boolean abierta;
-    private TipoEmpleo tipoEmpleo; // Enum definido aparte
-    private int experienciaRequerida; // en años
+    private TipoEmpleo tipoEmpleo; 
+    private int experienciaRequerida; 
 
     public Vacante(String id, String titulo, String descripcion, List<String> requisitos, double salario,
                    empresa empresa, Date fechaPublicacion, boolean abierta, TipoEmpleo tipoEmpleo, int experienciaRequerida) {
@@ -29,7 +29,6 @@ public class Vacante {
         this.experienciaRequerida = experienciaRequerida;
     }
 
-    // Getters y setters
 
     public String getId() {
         return id;

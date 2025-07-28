@@ -11,16 +11,14 @@ public class RegCandidato extends JFrame {
     private JTextField txtTelefono;
     private JTextField txtDireccion;
     private JTextField txtEmail;
-    // Ya no se usa txtFechaNacimiento
 
     private JComboBox<String> comboTipoCandidato;
 
-    // Spinners para la fecha de nacimiento
     private JSpinner spinnerDia;
     private JSpinner spinnerMes;
-    private JComboBox<Integer> comboAnio; // <<--- ComboBox para año
+    private JComboBox<Integer> comboAnio;
 
-    private VentanaPrincipal ventanaPrincipal; // <<--- AGREGADO
+    private VentanaPrincipal ventanaPrincipal; 
 
     public RegCandidato(VentanaPrincipal ventanaPrincipal) {
         this.ventanaPrincipal = ventanaPrincipal;
@@ -82,7 +80,6 @@ public class RegCandidato extends JFrame {
         lblFechaNacimiento.setBounds(30, 323, 144, 25);
         getContentPane().add(lblFechaNacimiento);
 
-        // Día y mes como spinner
         spinnerDia = new JSpinner(new SpinnerNumberModel(1, 1, 31, 1));
         spinnerDia.setBounds(186, 323, 50, 25);
         getContentPane().add(spinnerDia);
@@ -91,7 +88,6 @@ public class RegCandidato extends JFrame {
         spinnerMes.setBounds(241, 323, 50, 25);
         getContentPane().add(spinnerMes);
 
-        // Año como ComboBox (de 1965 a actual)
         int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
         comboAnio = new JComboBox<>();
         for (int y = currentYear; y >= 1965; y--) {
@@ -100,7 +96,6 @@ public class RegCandidato extends JFrame {
         comboAnio.setBounds(296, 323, 90, 25);
         getContentPane().add(comboAnio);
 
-        // Labels para los campos de fecha
         JLabel lblDia = new JLabel("Día");
         lblDia.setFont(new Font("SansSerif", Font.PLAIN, 11));
         lblDia.setBounds(186, 305, 30, 15);
@@ -147,7 +142,6 @@ public class RegCandidato extends JFrame {
         getContentPane().add(lblNewLabel);
 
         btnGuardar.addActionListener(e -> {
-            // Lee datos comunes del formulario
             String id = txtCedula.getText();
             String nombre = txtNombre.getText();
             String apellido = txtApellido.getText();
@@ -156,18 +150,16 @@ public class RegCandidato extends JFrame {
             String email = txtEmail.getText();
             String direccion = txtDireccion.getText();
 
-            // Lee fecha de nacimiento de los spinners y combo
             int dia = (int) spinnerDia.getValue();
             int mes = (int) spinnerMes.getValue();
             int anio = (int) comboAnio.getSelectedItem();
 
             java.util.Calendar cal = java.util.Calendar.getInstance();
-            cal.set(anio, mes - 1, dia); // mes va de 0 a 11 en Calendar
+            cal.set(anio, mes - 1, dia);
             java.util.Date fechaNacimiento = cal.getTime();
 
             java.util.Date fechaRegistro = new java.util.Date();
 
-            // Verifica el tipo de candidato
             String tipo = comboTipoCandidato.getSelectedItem().toString();
 
             logico.Candidato candidato = null;
@@ -192,7 +184,6 @@ public class RegCandidato extends JFrame {
                 );
             }
 
-            // Guarda el candidato en BolsaLaboral
             if (candidato != null) {
                 logico.BolsaLaboral.getInstancia().agregarCandidato(candidato);
                 ventanaPrincipal.actualizarResumen();

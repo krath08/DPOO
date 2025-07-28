@@ -13,11 +13,11 @@ import logico.empresa;
 public class RegVacante extends JFrame {
 	private JTextField txtId;
 	private JTextField txtTitulo;
-	private JTextField txtDescripcion; // CAMBIO: Ahora es JTextField, no JTextArea
+	private JTextField txtDescripcion; 
 	private JTextField txtSalario;
 	private JComboBox<String> comboEmpresa;
 	private JTextField txtExperiencia;
-	private JComboBox<Object> comboTipoEmpleo; // Para "<Seleccione>" + enums
+	private JComboBox<Object> comboTipoEmpleo; 
 
 	private VentanaPrincipal ventanaPrincipal;
 
@@ -54,8 +54,8 @@ public class RegVacante extends JFrame {
 		lblDescripcion.setBounds(30, 122, 100, 25);
 		getContentPane().add(lblDescripcion);
 
-		txtDescripcion = new JTextField(); // CAMBIO
-		txtDescripcion.setBounds(192, 123, 232, 25); // CAMBIO: ajustado el tamaño a un solo renglón
+		txtDescripcion = new JTextField(); 
+		txtDescripcion.setBounds(192, 123, 232, 25); 
 		getContentPane().add(txtDescripcion);
 
 		JLabel lblEmpresa = new JLabel("Empresa:");
@@ -64,7 +64,7 @@ public class RegVacante extends JFrame {
 		getContentPane().add(lblEmpresa);
 
 		comboEmpresa = new JComboBox<>();
-		// Carga las empresas activas
+
 		for (empresa e : BolsaLaboral.getInstancia().getEmpresas()) {
 			if (e.isActiva())
 				comboEmpresa.addItem(e.getNombre());
@@ -86,7 +86,6 @@ public class RegVacante extends JFrame {
 		lblTipoEmpleo.setBounds(30, 269, 120, 25);
 		getContentPane().add(lblTipoEmpleo);
 
-		// Combo con <Seleccione> y luego enums
 		comboTipoEmpleo = new JComboBox<>();
 		comboTipoEmpleo.addItem("<Seleccione>");
 		for (TipoEmpleo t : TipoEmpleo.values()) {
@@ -104,7 +103,6 @@ public class RegVacante extends JFrame {
 		txtExperiencia.setBounds(192, 319, 60, 25);
 		getContentPane().add(txtExperiencia);
 
-		// Checkboxes para requisitos - TODOS con fuente SansSerif 13
 		Font checkFont = new Font("SansSerif", Font.PLAIN, 13);
 
 		JCheckBox chkExperiencia = new JCheckBox("Experiencia previa en el área");
@@ -170,7 +168,6 @@ public class RegVacante extends JFrame {
 				int experiencia = Integer.parseInt(txtExperiencia.getText().trim());
 				Date fechaPublicacion = new Date();
 
-				// Procesar requisitos seleccionados
 				List<String> requisitos = new ArrayList<>();
 				if (chkExperiencia.isSelected())
 					requisitos.add("Experiencia previa en el área");
