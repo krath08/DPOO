@@ -4,13 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class login extends JFrame {
+public class Login extends JFrame {
 
     private JTextField usuarioField;
     private JPasswordField contrasenaField;
     private JLabel mensajeError;
 
-    public login() {
+    public Login() {
         setTitle("Sistema de Bolsa Laboral - Iniciar Sesión");
         setSize(600, 500); 
         setLocationRelativeTo(null);
@@ -85,7 +85,7 @@ public class login extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new login().setVisible(true);
+            new Login().setVisible(true);
         });
     }
 }
