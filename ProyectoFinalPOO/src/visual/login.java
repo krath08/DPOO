@@ -67,9 +67,11 @@ public class login extends JFrame {
                 String contrasena = new String(contrasenaField.getPassword());
 
                 if (validarLogin(usuario, contrasena)) {
-                    mensajeError.setText("");
-                    JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
-                    dispose();
+                	dispose();
+                	SwingUtilities.invokeLater(() -> {
+                	    VentanaPrincipal vp = new VentanaPrincipal();
+                	    vp.setVisible(true);
+                	});
                 } else {
                     mensajeError.setText("Usuario o contraseña incorrectos.");
                 }
@@ -78,7 +80,7 @@ public class login extends JFrame {
     }
 
     private boolean validarLogin(String usuario, String contrasena) {
-        return usuario.equals("bryansalcedo08") && contrasena.equals("tu_contraseña");
+        return usuario.equals("admin") && contrasena.equals("admin");
     }
 
     public static void main(String[] args) {
