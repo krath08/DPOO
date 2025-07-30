@@ -5,11 +5,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import logico.*;
-import java.util.List;
-import java.util.ArrayList;
 
-public class RegistrarPostulacion extends JFrame {
-	private JComboBox<String> cbCandidatos;
+public class RegPostulacionCandidato extends JFrame {
+	private Candidato candidato;
 	private JComboBox<String> cbVacantes;
 	private JPanel panelRequisitos;
 	private JTextArea txtComentarios;
@@ -17,50 +15,50 @@ public class RegistrarPostulacion extends JFrame {
 	private JComboBox<EstadoPostulacion> cbEstado;
 	private java.util.List<JCheckBox> checkboxes = new ArrayList<>();
 
-	public RegistrarPostulacion() {
+	public RegPostulacionCandidato(Candidato candidato) {
+		this.candidato = candidato;
 		setTitle("Registrar Postulación");
 		setSize(600, 600);
 		setLocationRelativeTo(null);
 		setLayout(null);
 
-		JLabel lblCandidato = new JLabel("Candidato:");
-		lblCandidato.setBounds(30, 20, 100, 25);
-		add(lblCandidato);
-
-		cbCandidatos = new JComboBox<>();
-		cbCandidatos.setBounds(150, 20, 400, 25);
-		for (Candidato c : BolsaLaboral.getInstancia().getCandidatos()) {
-			cbCandidatos.addItem(c.getUsuario() + " - " + c.getNombre());
-		}
-		add(cbCandidatos);
-
 		JLabel lblVacante = new JLabel("Vacante:");
-		lblVacante.setBounds(30, 60, 100, 25);
+		lblVacante.setBounds(30, 30, 100, 25);
 		add(lblVacante);
 
 		cbVacantes = new JComboBox<>();
-		cbVacantes.setBounds(150, 60, 400, 25);
+		cbVacantes.setBounds(150, 30, 400, 25);
+
+		Set<String> idsPostulados = new HashSet<>();
+		for (Postulacion p : BolsaLaboral.getInstancia().getPostulaciones()) {
+			if (p.getCandidato().getUsuario().equals(candidato.getUsuario())) {
+				idsPostulados.add(p.getVacante().getId());
+			}
+		}
 		for (Vacante v : BolsaLaboral.getInstancia().getVacantes()) {
-			cbVacantes.addItem(v.getId() + " - " + v.getTitulo());
+			if (v.isAbierta() && !idsPostulados.contains(v.getId())) {
+				cbVacantes.addItem(v.getId() + " - " + v.getTitulo());
+			}
 		}
 		add(cbVacantes);
 
 		JLabel lblEstado = new JLabel("Estado:");
-		lblEstado.setBounds(30, 100, 100, 25);
+		lblEstado.setBounds(30, 70, 100, 25);
 		add(lblEstado);
 
 		cbEstado = new JComboBox<>(EstadoPostulacion.values());
-		cbEstado.setBounds(150, 100, 200, 25);
+		cbEstado.setBounds(150, 70, 200, 25);
+		cbEstado.setSelectedItem(EstadoPostulacion.PENDIENTE);
 		add(cbEstado);
 
 		JLabel lblRequisitos = new JLabel("Requisitos Cumplidos:");
-		lblRequisitos.setBounds(30, 140, 200, 25);
+		lblRequisitos.setBounds(30, 110, 200, 25);
 		add(lblRequisitos);
 
 		panelRequisitos = new JPanel();
 		panelRequisitos.setLayout(new BoxLayout(panelRequisitos, BoxLayout.Y_AXIS));
 		JScrollPane scroll = new JScrollPane(panelRequisitos);
-		scroll.setBounds(30, 170, 520, 150);
+		scroll.setBounds(30, 140, 520, 150);
 		add(scroll);
 
 		cbVacantes.addActionListener(e -> cargarRequisitos());
@@ -68,16 +66,16 @@ public class RegistrarPostulacion extends JFrame {
 			cargarRequisitos();
 
 		JLabel lblComentarios = new JLabel("Comentarios:");
-		lblComentarios.setBounds(30, 330, 100, 25);
+		lblComentarios.setBounds(30, 310, 100, 25);
 		add(lblComentarios);
 
 		txtComentarios = new JTextArea();
 		JScrollPane scrollComentarios = new JScrollPane(txtComentarios);
-		scrollComentarios.setBounds(30, 360, 520, 80);
+		scrollComentarios.setBounds(30, 340, 520, 80);
 		add(scrollComentarios);
 
 		btnGuardar = new JButton("Guardar Postulación");
-		btnGuardar.setBounds(200, 470, 200, 40);
+		btnGuardar.setBounds(200, 450, 200, 40);
 		add(btnGuardar);
 
 		btnGuardar.addActionListener(e -> guardarPostulacion());
@@ -116,15 +114,10 @@ public class RegistrarPostulacion extends JFrame {
 	}
 
 	private void guardarPostulacion() {
-		String candidatoUsuario = ((String) cbCandidatos.getSelectedItem()).split(" - ")[0];
-		Candidato candidato = null;
-		for (Candidato c : BolsaLaboral.getInstancia().getCandidatos()) {
-			if (c.getUsuario().equals(candidatoUsuario)) {
-				candidato = c;
-				break;
-			}
+		if (cbVacantes.getSelectedItem() == null) {
+			JOptionPane.showMessageDialog(this, "No hay vacantes seleccionadas.");
+			return;
 		}
-
 		String vacanteId = ((String) cbVacantes.getSelectedItem()).split(" - ")[0];
 		Vacante vacante = null;
 		for (Vacante v : BolsaLaboral.getInstancia().getVacantes()) {
@@ -134,7 +127,7 @@ public class RegistrarPostulacion extends JFrame {
 			}
 		}
 
-		List<String> requisitosCumplidos = new ArrayList<>();
+		java.util.List<String> requisitosCumplidos = new ArrayList<>();
 		for (JCheckBox chk : checkboxes) {
 			if (chk.isSelected())
 				requisitosCumplidos.add(chk.getText());

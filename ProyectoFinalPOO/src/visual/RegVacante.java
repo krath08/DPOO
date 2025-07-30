@@ -13,11 +13,11 @@ import logico.empresa;
 public class RegVacante extends JFrame {
 	private JTextField txtId;
 	private JTextField txtTitulo;
-	private JTextField txtDescripcion; 
+	private JTextField txtDescripcion;
 	private JTextField txtSalario;
 	private JComboBox<String> comboEmpresa;
 	private JTextField txtExperiencia;
-	private JComboBox<Object> comboTipoEmpleo; 
+	private JComboBox<Object> comboTipoEmpleo;
 
 	private VentanaPrincipal ventanaPrincipal;
 
@@ -54,8 +54,8 @@ public class RegVacante extends JFrame {
 		lblDescripcion.setBounds(30, 122, 100, 25);
 		getContentPane().add(lblDescripcion);
 
-		txtDescripcion = new JTextField(); 
-		txtDescripcion.setBounds(192, 123, 232, 25); 
+		txtDescripcion = new JTextField();
+		txtDescripcion.setBounds(192, 123, 232, 25);
 		getContentPane().add(txtDescripcion);
 
 		JLabel lblEmpresa = new JLabel("Empresa:");
@@ -145,7 +145,7 @@ public class RegVacante extends JFrame {
 		btnGuardar.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnGuardar.setBounds(461, 599, 100, 30);
 		getContentPane().add(btnGuardar);
-		
+
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon(RegVacante.class.getResource("/imagen/ImagenRegVacante.png")));
 		lblNewLabel.setBounds(449, 43, 100, 110);

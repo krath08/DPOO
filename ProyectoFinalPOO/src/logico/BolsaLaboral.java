@@ -51,6 +51,10 @@ public class BolsaLaboral implements Serializable {
         guardarLista(postulaciones, ARCHIVO_POSTULACIONES);
     }
 
+    public List<Postulacion> getPostulaciones() {
+        return postulaciones;
+    }
+
     public int getCantidadEmpresasActivas() {
         int count = 0;
         for (empresa e : empresas) {
@@ -86,6 +90,7 @@ public class BolsaLaboral implements Serializable {
     public List<empresa> getEmpresas() {
         return empresas;
     }
+
     public List<Vacante> getVacantes() {
         return vacantes;
     }
@@ -117,8 +122,6 @@ public class BolsaLaboral implements Serializable {
         }
         return null;
     }
-
-    // === MÉTODOS AUXILIARES DE SERIALIZACIÓN ===
 
     private <T> void guardarLista(List<T> lista, String nombreArchivo) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nombreArchivo))) {

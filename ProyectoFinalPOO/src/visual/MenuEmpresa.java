@@ -1,15 +1,21 @@
 package visual;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import logico.BolsaLaboral;
 import logico.empresa;
+import logico.Vacante;
+import logico.Postulacion;
 
 public class MenuEmpresa extends JFrame {
 
     private JLabel lblNombre;
     private JLabel lblTipoEmpresa;
     private JLabel lblEmail;
-    private empresa empresaActual; // referencia a la empresa logueada
+    private empresa empresaActual;
 
     public MenuEmpresa(empresa empresaActual) {
         this.empresaActual = empresaActual;
@@ -20,7 +26,6 @@ public class MenuEmpresa extends JFrame {
         setSize(900, 600);
         setLocationRelativeTo(null);
 
-        // Fondo decorativo
         Image imgFondo = new ImageIcon(getClass().getResource("/imagen/ImagenPrincipal.jpg")).getImage();
         FondoPanel fondoPanel = new FondoPanel(imgFondo);
         fondoPanel.setLayout(null);
@@ -47,7 +52,6 @@ public class MenuEmpresa extends JFrame {
             new Login().setVisible(true);
         });
 
-        // Panel datos de la empresa
         JPanel panelDatos = new JPanel();
         panelDatos.setBounds(30, 40, 350, 160);
         panelDatos.setOpaque(false);
@@ -66,7 +70,6 @@ public class MenuEmpresa extends JFrame {
         panelDatos.add(lblEmail);
         fondoPanel.add(panelDatos);
 
-        // Panel de acciones principales
         JPanel panelAcciones = new JPanel();
         panelAcciones.setBounds(430, 40, 400, 160);
         panelAcciones.setOpaque(false);
@@ -86,38 +89,83 @@ public class MenuEmpresa extends JFrame {
 
         fondoPanel.add(panelAcciones);
 
-        // --- LISTENERS DE LOS BOTONES ---
         btnRegistrarVacante.addActionListener(e -> {
-            // Aquí abres tu formulario de registrar vacante, pasando la empresa actual
             new RegVacanteEmpresa(empresaActual).setVisible(true);
         });
 
-        btnVerVacantes.addActionListener(e -> {
-            // Aquí puedes abrir la ventana de "Ver Mis Vacantes"
-            // new VerVacantesEmpresa(empresaActual).setVisible(true);
-            JOptionPane.showMessageDialog(this, "Aquí irá la ventana de Vacantes de esta empresa.");
-        });
+        btnVerVacantes.addActionListener(e -> mostrarVacantesEmpresa());
 
-        btnVerPostulaciones.addActionListener(e -> {
-            // Aquí puedes abrir la ventana de "Ver Postulaciones Recibidas"
-            // new VerPostulacionesEmpresa(empresaActual).setVisible(true);
-            JOptionPane.showMessageDialog(this, "Aquí irá la ventana de Postulaciones recibidas por esta empresa.");
-        });
+        btnVerPostulaciones.addActionListener(e -> mostrarPostulacionesEmpresa());
     }
 
-    // Panel de fondo igual al de VentanaPrincipal
     class FondoPanel extends JPanel {
         private Image imagen;
-
         public FondoPanel(Image imagen) {
             this.imagen = imagen;
         }
-
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             if (imagen != null)
                 g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
         }
+    }
+
+    private void mostrarVacantesEmpresa() {
+        List<Vacante> vacantes = BolsaLaboral.getInstancia().getVacantes();
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[]{"ID", "Título", "Salario", "Tipo Empleo", "Abierta"});
+        for (Vacante v : vacantes) {
+            if (v.getEmpresa().getUsuario().equals(empresaActual.getUsuario())) {
+                modelo.addRow(new Object[]{
+                    v.getId(),
+                    v.getTitulo(),
+                    v.getSalario(),
+                    v.getTipoEmpleo(),
+                    v.isAbierta() ? "Sí" : "No"
+                });
+            }
+        }
+        JTable table = new JTable(modelo);
+        table.setEnabled(false);
+        JScrollPane scrollPane = new JScrollPane(table);
+        JDialog dialog = new JDialog(this, "Mis Vacantes", true);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.getContentPane().add(scrollPane);
+        dialog.setSize(600, 350);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
+
+    private void mostrarPostulacionesEmpresa() {
+        List<Postulacion> postulaciones = BolsaLaboral.getInstancia().getPostulaciones();
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[]{"Vacante", "Candidato", "Estado", "Fecha", "Comentarios"});
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        for (Postulacion p : postulaciones) {
+            if (p.getVacante().getEmpresa().getUsuario().equals(empresaActual.getUsuario())) {
+                String fechaFormateada = "";
+                if (p.getFechaPostulacion() != null) {
+                    fechaFormateada = sdf.format(p.getFechaPostulacion());
+                }
+                String nombreCandidato = p.getCandidato().getNombre() + " " + p.getCandidato().getApellido();
+                modelo.addRow(new Object[]{
+                    p.getVacante().getTitulo(),
+                    nombreCandidato,
+                    p.getEstado(),
+                    fechaFormateada,
+                    p.getComentarios()
+                });
+            }
+        }
+        JTable table = new JTable(modelo);
+        table.setEnabled(false);
+        JScrollPane scrollPane = new JScrollPane(table);
+        JDialog dialog = new JDialog(this, "Postulaciones Recibidas", true);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.getContentPane().add(scrollPane);
+        dialog.setSize(750, 350);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 }
