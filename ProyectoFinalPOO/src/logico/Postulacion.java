@@ -2,7 +2,7 @@ package logico;
 
 import java.util.Date;
 
-class Postulacion {
+public class Postulacion {
 	private String id;
 	private Candidato candidato;
 	private Vacante vacante;

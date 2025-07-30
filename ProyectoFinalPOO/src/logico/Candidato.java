@@ -12,8 +12,10 @@ public abstract class Candidato {
 	private String direccion;
 	private Date fechaNacimiento;
 	private Date fechaRegistro;
+	private String usuario;
+	private String contrasena;
 	public Candidato(String id, String nombre, String apellido, String cedula, String telefono, String email,
-			String direccion, Date fechaNacimiento, Date fechaRegistro) {
+			String direccion, Date fechaNacimiento, Date fechaRegistro, String usuario, String contrasena) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -24,6 +26,8 @@ public abstract class Candidato {
 		this.direccion = direccion;
 		this.fechaNacimiento = fechaNacimiento;
 		this.fechaRegistro = fechaRegistro;
+		this.usuario = usuario;
+		this.contrasena = contrasena;
 	}
 	public String getId() {
 		return id;
@@ -51,5 +55,11 @@ public abstract class Candidato {
 	}
 	public Date getFechaRegistro() {
 		return fechaRegistro;
+	}
+	public String getUsuario() {
+		return usuario;
+	}
+	public String getContrasena() {
+		return contrasena;
 	}
 }

@@ -78,4 +78,19 @@ public class BolsaLaboral {
         }
         return null;
     }
+    public Candidato buscarCandidatoPorUsuario(String usuario, String contrasena) {
+        for (Candidato c : candidatos) {
+            if (c.getUsuario().equals(usuario) && c.getContrasena().equals(contrasena))
+                return c;
+        }
+        return null;
+    }
+    public empresa buscarEmpresaPorUsuario(String usuario, String contrasena) {
+        for (empresa e : empresas) {
+            if (e.getUsuario().equals(usuario) && e.getContrasena().equals(contrasena))
+                return e;
+        }
+        return null;
+    }
+
 }
