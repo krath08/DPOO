@@ -94,6 +94,15 @@ public class VentanaPrincipal extends JFrame {
         menu_2.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/IconoRegPostu.png")));
         menu_2.setFont(new Font("SansSerif", Font.PLAIN, 16));
         menuBar.add(menu_2);
+        JMenuItem itemRegistrarPostulacion = new JMenuItem("Registrar Postulación");
+        //itemRegistrarPostulacion.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconitoRegPostulacion.png"))); // Asegúrate de tener este ícono
+        itemRegistrarPostulacion.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        menu_2.add(itemRegistrarPostulacion);
+        itemRegistrarPostulacion.addActionListener(e -> {
+            RegistrarPostulacion ventana = new RegistrarPostulacion();
+            ventana.setVisible(true);
+        });
+        
         JMenu menu_3 = new JMenu("Reportes");
         menu_3.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/IconoReport.png")));
         menu_3.setFont(new Font("SansSerif", Font.PLAIN, 16));
