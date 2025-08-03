@@ -30,7 +30,7 @@ public class RegistrarPostulacion extends JFrame {
 		cbCandidatos = new JComboBox<>();
 		cbCandidatos.setBounds(150, 20, 400, 25);
 		for (Candidato c : BolsaLaboral.getInstancia().getCandidatos()) {
-			cbCandidatos.addItem(c.getUsuario() + " - " + c.getNombre());
+			cbCandidatos.addItem(c.getNombre()+ " - " + c.getApellido());
 		}
 		add(cbCandidatos);
 

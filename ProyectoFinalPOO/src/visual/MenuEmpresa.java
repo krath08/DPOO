@@ -24,9 +24,9 @@ public class MenuEmpresa extends JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(MenuEmpresa.class.getResource("/imagen/IconoPrincipal.png")));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 600);
-        setLocationRelativeTo(null);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        Image imgFondo = new ImageIcon(getClass().getResource("/imagen/ImagenPrincipal.jpg")).getImage();
+        Image imgFondo = new ImageIcon(getClass().getResource("/imagen/imagenEmpresa.png")).getImage();
         FondoPanel fondoPanel = new FondoPanel(imgFondo);
         fondoPanel.setLayout(null);
         setContentPane(fondoPanel);
@@ -35,17 +35,21 @@ public class MenuEmpresa extends JFrame {
         setJMenuBar(menuBar);
 
         JMenu menuPerfil = new JMenu("Mi Empresa");
+        menuPerfil.setIcon(new ImageIcon(MenuEmpresa.class.getResource("/imagen/iconoMiPerfil.png")));
         menuPerfil.setFont(new Font("SansSerif", Font.PLAIN, 16));
         menuBar.add(menuPerfil);
 
         JMenuItem itemEditarPerfil = new JMenuItem("Editar Perfil");
+        itemEditarPerfil.setIcon(new ImageIcon(MenuEmpresa.class.getResource("/imagen/iconitoEditar.png")));
         itemEditarPerfil.setFont(new Font("SansSerif", Font.PLAIN, 14));
         menuPerfil.add(itemEditarPerfil);
 
         JMenu menuSalir = new JMenu("Salir");
+        menuSalir.setIcon(new ImageIcon(MenuEmpresa.class.getResource("/imagen/IconoSalir.png")));
         menuSalir.setFont(new Font("SansSerif", Font.PLAIN, 16));
         menuBar.add(menuSalir);
         JMenuItem itemCerrarSesion = new JMenuItem("Cerrar sesión");
+        itemCerrarSesion.setIcon(new ImageIcon(MenuEmpresa.class.getResource("/imagen/iconitoSalir.png")));
         menuSalir.add(itemCerrarSesion);
         itemCerrarSesion.addActionListener(e -> {
             dispose();

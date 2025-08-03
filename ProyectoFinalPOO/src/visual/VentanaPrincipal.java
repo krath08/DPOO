@@ -13,269 +13,283 @@ import java.util.Collections;
 
 public class VentanaPrincipal extends JFrame {
 
-	private JLabel lblCandidatosRegistrados;
-	private JLabel lblEmpresasActivas;
-	private JLabel lblVacantesAbiertas;
-	private JLabel lblPostulacionesPendientes;
-	private JTable tablaPostulaciones;
-	private DefaultTableModel modeloTabla;
+    private JLabel lblCandidatosRegistrados;
+    private JLabel lblEmpresasActivas;
+    private JLabel lblVacantesAbiertas;
+    private JLabel lblPostulacionesPendientes;
+    private JTable tablaPostulaciones;
+    private DefaultTableModel modeloTabla;
 
-	class FondoPanel extends JPanel {
-		private Image imagen;
+    class FondoPanel extends JPanel {
+        private Image imagen;
+        public FondoPanel(Image imagen) {
+            this.imagen = imagen;
+        }
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (imagen != null)
+                g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
 
-		public FondoPanel(Image imagen) {
-			this.imagen = imagen;
-		}
+    public VentanaPrincipal() {
+        setTitle("Sistema de Bolsa Laboral - Ventana Principal");
+        setIconImage(
+            Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/imagen/IconoPrincipal.png")));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1000, 700);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-		@Override
-		protected void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			if (imagen != null)
-				g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
-		}
-	}
+        Image imgFondo = new ImageIcon(getClass().getResource("/imagen/ImagenPrincipal.jpg")).getImage();
+        FondoPanel fondoPanel = new FondoPanel(imgFondo);
+        fondoPanel.setLayout(null);
+        setContentPane(fondoPanel);
 
-	public VentanaPrincipal() {
-		setTitle("Sistema de Bolsa Laboral - Ventana Principal");
-		setIconImage(
-				Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/imagen/IconoPrincipal.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(1000, 700);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
 
-		Image imgFondo = new ImageIcon(getClass().getResource("/imagen/ImagenPrincipal.jpg")).getImage();
-		FondoPanel fondoPanel = new FondoPanel(imgFondo);
-		fondoPanel.setLayout(null);
-		setContentPane(fondoPanel);
+        JMenu menuSalir = new JMenu("Salir");
+        menuSalir.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/IconoSalir.png")));
+        menuSalir.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        menuBar.add(menuSalir);
 
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
+        JMenuItem itemCerrarSesion = new JMenuItem("Cerrar sesión");
+        itemCerrarSesion.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        menuSalir.add(itemCerrarSesion);
 
-		JMenu menuSalir = new JMenu("Salir");
-		menuSalir.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/IconoArchivo.png")));
-		menuSalir.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		menuBar.add(menuSalir);
+        itemCerrarSesion.addActionListener(e -> {
+            dispose();
+            new Login().setVisible(true);
+        });
 
-		JMenuItem itemCerrarSesion = new JMenuItem("Cerrar sesión");
-		itemCerrarSesion.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		menuSalir.add(itemCerrarSesion);
+        JMenu menuCandidatos = new JMenu("Candidatos");
+        menuCandidatos.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconitoRegCandi.png")));
+        menuCandidatos.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        menuBar.add(menuCandidatos);
 
-		itemCerrarSesion.addActionListener(e -> {
-			dispose();
-			new Login().setVisible(true);
-		});
+        JMenuItem itemRegistrarCandidato = new JMenuItem("Registrar Candidato");
+        itemRegistrarCandidato
+        .setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/miniIconRegCandi.png")));
+        itemRegistrarCandidato.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        menuCandidatos.add(itemRegistrarCandidato);
+        itemRegistrarCandidato.addActionListener(e -> {
+            RegCandidato ventana = new RegCandidato(this);
+            ventana.setVisible(true);
+        });
 
-		JMenu menuCandidatos = new JMenu("Candidatos");
-		menuCandidatos.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconitoRegCandi.png")));
-		menuCandidatos.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		menuBar.add(menuCandidatos);
+        JMenu menuEmpresa = new JMenu("Empresa");
+        menuEmpresa.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconitoRegEmpresa.png")));
+        menuEmpresa.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        menuBar.add(menuEmpresa);
 
-		JMenuItem itemRegistrarCandidato = new JMenuItem("Registrar Candidato");
-		itemRegistrarCandidato
-		.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/miniIconRegCandi.png")));
-		itemRegistrarCandidato.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		menuCandidatos.add(itemRegistrarCandidato);
-		itemRegistrarCandidato.addActionListener(e -> {
-			RegCandidato ventana = new RegCandidato(this);
-			ventana.setVisible(true);
-		});
+        JMenuItem itemRegistrarEmpresa = new JMenuItem("Registrar Empresa");
+        itemRegistrarEmpresa.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/miniIconRegEmpre.png")));
+        itemRegistrarEmpresa.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        menuEmpresa.add(itemRegistrarEmpresa);
+        itemRegistrarEmpresa.addActionListener(e -> {
+            RegEmpresa ventana = new RegEmpresa(this);
+            ventana.setVisible(true);
+        });
 
-		JMenu menuEmpresa = new JMenu("Empresa");
-		menuEmpresa.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconitoRegEmpresa.png")));
-		menuEmpresa.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		menuBar.add(menuEmpresa);
+        JMenu menu_1 = new JMenu("Vacantes");
+        menu_1.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconitoRegVacante.png")));
+        menu_1.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        menuBar.add(menu_1);
 
-		JMenuItem itemRegistrarEmpresa = new JMenuItem("Registrar Empresa");
-		itemRegistrarEmpresa.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/miniIconRegEmpre.png")));
-		itemRegistrarEmpresa.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		menuEmpresa.add(itemRegistrarEmpresa);
-		itemRegistrarEmpresa.addActionListener(e -> {
-			RegEmpresa ventana = new RegEmpresa(this);
-			ventana.setVisible(true);
-		});
+        JMenuItem itemRegistrarVacante = new JMenuItem("Registrar Vacante");
+        itemRegistrarVacante
+        .setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/miniIconRegVacant.png")));
+        itemRegistrarVacante.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        menu_1.add(itemRegistrarVacante);
+        itemRegistrarVacante.addActionListener(e -> {
+            RegVacante ventana = new RegVacante(this);
+            ventana.setVisible(true);
+        });
 
-		JMenu menu_1 = new JMenu("Vacantes");
-		menu_1.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconitoRegVacante.png")));
-		menu_1.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		menuBar.add(menu_1);
+        JMenu menu_2 = new JMenu("Postulaciones");
+        menu_2.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/IconoRegPostu.png")));
+        menu_2.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        menuBar.add(menu_2);
+        JMenuItem itemRegistrarPostulacion = new JMenuItem("Registrar Postulación");
+        itemRegistrarPostulacion.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconitoRegPost.png")));
+        itemRegistrarPostulacion.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        menu_2.add(itemRegistrarPostulacion);
+        itemRegistrarPostulacion.addActionListener(e -> {
+            RegistrarPostulacion ventana = new RegistrarPostulacion();
+            ventana.setVisible(true);
+            actualizarTablaPostulaciones();
+        });
 
-		JMenuItem itemRegistrarVacante = new JMenuItem("Registrar Vacante");
-		itemRegistrarVacante
-		.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/miniIconRegVacant.png")));
-		itemRegistrarVacante.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		menu_1.add(itemRegistrarVacante);
-		itemRegistrarVacante.addActionListener(e -> {
-			RegVacante ventana = new RegVacante(this);
-			ventana.setVisible(true);
-		});
+        JMenu menu_3 = new JMenu("Reportes");
+        menu_3.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/IconoReport.png")));
+        menu_3.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        menuBar.add(menu_3);
 
-		JMenu menu_2 = new JMenu("Postulaciones");
-		menu_2.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/IconoRegPostu.png")));
-		menu_2.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		menuBar.add(menu_2);
-		JMenuItem itemRegistrarPostulacion = new JMenuItem("Registrar Postulación");
-		itemRegistrarPostulacion.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		menu_2.add(itemRegistrarPostulacion);
-		itemRegistrarPostulacion.addActionListener(e -> {
-			RegistrarPostulacion ventana = new RegistrarPostulacion();
-			ventana.setVisible(true);
-		});
+        JPanel panelResumen = new JPanel();
+        panelResumen.setBounds(12, 28, 194, 194);
+        panelResumen.setOpaque(false);
+        panelResumen.setBorder(BorderFactory.createTitledBorder("Resumen del Sistema"));
+        panelResumen.setLayout(new GridLayout(4, 1));
 
-		JMenu menu_3 = new JMenu("Reportes");
-		menu_3.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/IconoReport.png")));
-		menu_3.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		menuBar.add(menu_3);
+        lblCandidatosRegistrados = new JLabel("Candidatos registrados: ");
+        lblCandidatosRegistrados.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 13));
+        lblEmpresasActivas = new JLabel("Empresas activas: ");
+        lblEmpresasActivas.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 13));
+        lblVacantesAbiertas = new JLabel("Vacantes abiertas: ");
+        lblVacantesAbiertas.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 13));
+        lblPostulacionesPendientes = new JLabel("Postulaciones pendientes: ");
+        lblPostulacionesPendientes.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 13));
+        panelResumen.add(lblCandidatosRegistrados);
+        panelResumen.add(lblEmpresasActivas);
+        panelResumen.add(lblVacantesAbiertas);
+        panelResumen.add(lblPostulacionesPendientes);
+        fondoPanel.add(panelResumen);
 
-		JPanel panelResumen = new JPanel();
-		panelResumen.setBounds(12, 28, 194, 194);
-		panelResumen.setOpaque(false);
-		panelResumen.setBorder(BorderFactory.createTitledBorder("Resumen del Sistema"));
-		panelResumen.setLayout(new GridLayout(4, 1));
+        JPanel panelAcciones = new JPanel();
+        panelAcciones.setBounds(246, 28, 518, 194);
+        panelAcciones.setOpaque(false);
+        panelAcciones.setBorder(BorderFactory.createTitledBorder("Acciones Rápidas"));
+        panelAcciones.setLayout(new GridLayout(5, 1, 10, 10));
 
-		lblCandidatosRegistrados = new JLabel("Candidatos registrados: ");
-		lblCandidatosRegistrados.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 13));
-		lblEmpresasActivas = new JLabel("Empresas activas: ");
-		lblEmpresasActivas.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 13));
-		lblVacantesAbiertas = new JLabel("Vacantes abiertas: ");
-		lblVacantesAbiertas.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 13));
-		lblPostulacionesPendientes = new JLabel("Postulaciones pendientes: ");
-		lblPostulacionesPendientes.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 13));
-		panelResumen.add(lblCandidatosRegistrados);
-		panelResumen.add(lblEmpresasActivas);
-		panelResumen.add(lblVacantesAbiertas);
-		panelResumen.add(lblPostulacionesPendientes);
-		fondoPanel.add(panelResumen);
+        JButton btnRegistrarCandidato = new JButton("Registrar Nuevo Candidato");
+        btnRegistrarCandidato.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        btnRegistrarCandidato.addActionListener(e -> {
+            RegCandidato ventana = new RegCandidato(this);
+            ventana.setVisible(true);
+        });
+        JButton btnBuscarCandidatos = new JButton("Buscar Candidatos");
+        btnBuscarCandidatos.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        JButton btnVerVacantes = new JButton("Ver Vacantes Activas");
+        btnVerVacantes.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        JButton btnReporteMensual = new JButton("Generar Reporte Mensual");
+        btnReporteMensual.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
-		JPanel panelAcciones = new JPanel();
-		panelAcciones.setBounds(246, 28, 518, 194);
-		panelAcciones.setOpaque(false);
-		panelAcciones.setBorder(BorderFactory.createTitledBorder("Acciones Rápidas"));
-		panelAcciones.setLayout(new GridLayout(5, 1, 10, 10)); // 5 para añadir el botón match
+        panelAcciones.add(btnRegistrarCandidato);
+        panelAcciones.add(btnBuscarCandidatos);
+        panelAcciones.add(btnVerVacantes);
+        panelAcciones.add(btnReporteMensual);
 
-		JButton btnRegistrarCandidato = new JButton("Registrar Nuevo Candidato");
-		btnRegistrarCandidato.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		btnRegistrarCandidato.addActionListener(e -> {
-			RegCandidato ventana = new RegCandidato(this);
-			ventana.setVisible(true);
-		});
-		JButton btnBuscarCandidatos = new JButton("Buscar Candidatos");
-		btnBuscarCandidatos.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		JButton btnVerVacantes = new JButton("Ver Vacantes Activas");
-		btnVerVacantes.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		JButton btnReporteMensual = new JButton("Generar Reporte Mensual");
-		btnReporteMensual.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        JButton btnMatchVacantes = new JButton("Match de Vacantes");
+        btnMatchVacantes.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        panelAcciones.add(btnMatchVacantes);
+        btnMatchVacantes.addActionListener(e -> mostrarVentanaMatch());
 
-		panelAcciones.add(btnRegistrarCandidato);
-		panelAcciones.add(btnBuscarCandidatos);
-		panelAcciones.add(btnVerVacantes);
-		panelAcciones.add(btnReporteMensual);
+        fondoPanel.add(panelAcciones);
 
-		JButton btnMatchVacantes = new JButton("Match de Vacantes");
-		btnMatchVacantes.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		panelAcciones.add(btnMatchVacantes);
-		btnMatchVacantes.addActionListener(e -> mostrarVentanaMatch());
+        JPanel panelTabla = new JPanel();
+        panelTabla.setBounds(12, 290, 666, 236);
+        panelTabla.setOpaque(false);
+        panelTabla.setBorder(BorderFactory.createTitledBorder("Últimas Postulaciones"));
+        panelTabla.setLayout(new BorderLayout());
 
-		fondoPanel.add(panelAcciones);
+        String[] columnas = { "Candidato", "Empresa", "Vacante", "Fecha", "Estado" };
+        modeloTabla = new DefaultTableModel(columnas, 0);
+        tablaPostulaciones = new JTable(modeloTabla);
+        JScrollPane scrollPane = new JScrollPane(tablaPostulaciones);
+        scrollPane.setViewportBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panelTabla.add(scrollPane, BorderLayout.CENTER);
+        fondoPanel.add(panelTabla);
 
-		JPanel panelTabla = new JPanel();
-		panelTabla.setBounds(12, 290, 666, 236);
-		panelTabla.setOpaque(false);
-		panelTabla.setBorder(BorderFactory.createTitledBorder("Últimas Postulaciones"));
-		panelTabla.setLayout(new BorderLayout());
+        actualizarTablaPostulaciones();
+        actualizarResumen();
+    }
 
-		String[] columnas = { "Candidato", "Empresa", "Vacante", "Fecha", "Estado" };
-		modeloTabla = new DefaultTableModel(columnas, 0);
-		tablaPostulaciones = new JTable(modeloTabla);
-		JScrollPane scrollPane = new JScrollPane(tablaPostulaciones);
-		scrollPane.setViewportBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelTabla.add(scrollPane, BorderLayout.CENTER);
-		fondoPanel.add(panelTabla);
+    public void mostrarVentanaMatch() {
+        List<Vacante> vacantes = BolsaLaboral.getInstancia().getVacantes();
+        List<Postulacion> postulaciones = BolsaLaboral.getInstancia().getPostulaciones();
 
-		actualizarResumen();
-	}
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(
+                new Object[] { "Vacante", "Empresa", "Candidato", "Requisitos (%)", "Puntaje Total" });
 
-	public void mostrarVentanaMatch() {
-		List<Vacante> vacantes = BolsaLaboral.getInstancia().getVacantes();
-		List<Postulacion> postulaciones = BolsaLaboral.getInstancia().getPostulaciones();
+        for (Vacante vacante : vacantes) {
+            if (!vacante.isAbierta())
+                continue;
+            List<Postulacion> postulacionesVac = new ArrayList<>();
+            for (Postulacion p : postulaciones) {
+                if (p.getVacante().getId().equals(vacante.getId())) {
+                    postulacionesVac.add(p);
+                }
+            }
+            postulacionesVac.sort((a, b) -> Double.compare(calcularScore(a, vacante), calcularScore(b, vacante)));
+            Collections.reverse(postulacionesVac);
 
-		DefaultTableModel modelo = new DefaultTableModel();
-		modelo.setColumnIdentifiers(
-				new Object[] { "Vacante", "Empresa", "Candidato", "Requisitos (%)", "Puntaje Total" });
+            int top = Math.min(3, postulacionesVac.size());
+            for (int i = 0; i < top; i++) {
+                Postulacion p = postulacionesVac.get(i);
+                modelo.addRow(new Object[] { vacante.getTitulo(), vacante.getEmpresa().getNombre(),
+                        p.getCandidato().getNombre() + " " + p.getCandidato().getApellido(),
+                        requisitosMatchPorcentaje(p, vacante) + "%", (int) calcularScore(p, vacante) });
+            }
+            if (top == 0) {
+                modelo.addRow(new Object[] { vacante.getTitulo(), vacante.getEmpresa().getNombre(), "(Sin candidatos)",
+                        "-", "-" });
+            }
+        }
 
-		for (Vacante vacante : vacantes) {
-			if (!vacante.isAbierta())
-				continue;
-			List<Postulacion> postulacionesVac = new ArrayList<>();
-			for (Postulacion p : postulaciones) {
-				if (p.getVacante().getId().equals(vacante.getId())) {
-					postulacionesVac.add(p);
-				}
-			}
-			postulacionesVac.sort((a, b) -> Double.compare(calcularScore(a, vacante), calcularScore(b, vacante)));
-			Collections.reverse(postulacionesVac);
+        JTable table = new JTable(modelo);
+        JScrollPane scroll = new JScrollPane(table);
+        JDialog dialog = new JDialog(this, "Top Candidatos por Vacante", true);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.getContentPane().add(scroll);
+        dialog.setSize(800, 400);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
 
-			int top = Math.min(3, postulacionesVac.size());
-			for (int i = 0; i < top; i++) {
-				Postulacion p = postulacionesVac.get(i);
-				modelo.addRow(new Object[] { vacante.getTitulo(), vacante.getEmpresa().getNombre(),
-						p.getCandidato().getNombre() + " " + p.getCandidato().getApellido(),
-						requisitosMatchPorcentaje(p, vacante) + "%", (int) calcularScore(p, vacante) });
-			}
-			if (top == 0) {
-				modelo.addRow(new Object[] { vacante.getTitulo(), vacante.getEmpresa().getNombre(), "(Sin candidatos)",
-						"-", "-" });
-			}
-		}
+    private int requisitosMatchPorcentaje(Postulacion postulacion, Vacante vacante) {
+        if (vacante.getRequisitos().isEmpty())
+            return 100;
+        int cumple = 0;
+        for (String req : vacante.getRequisitos()) {
+            if (postulacion.getRequisitosCumplidos().contains(req))
+                cumple++;
+        }
+        return (int) ((cumple * 100.0) / vacante.getRequisitos().size());
+    }
 
-		JTable table = new JTable(modelo);
-		JScrollPane scroll = new JScrollPane(table);
-		JDialog dialog = new JDialog(this, "Top Candidatos por Vacante", true);
-		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		dialog.getContentPane().add(scroll);
-		dialog.setSize(800, 400);
-		dialog.setLocationRelativeTo(this);
-		dialog.setVisible(true);
-	}
+    private double calcularScore(Postulacion p, Vacante vacante) {
+        return requisitosMatchPorcentaje(p, vacante);
+    }
 
-	private int requisitosMatchPorcentaje(Postulacion postulacion, Vacante vacante) {
-		if (vacante.getRequisitos().isEmpty())
-			return 100;
-		int cumple = 0;
-		for (String req : vacante.getRequisitos()) {
-			if (postulacion.getRequisitosCumplidos().contains(req))
-				cumple++;
-		}
-		return (int) ((cumple * 100.0) / vacante.getRequisitos().size());
-	}
+    public void actualizarResumen() {
+        setCandidatosRegistrados(BolsaLaboral.getInstancia().getCantidadCandidatos());
+        setEmpresasActivas(BolsaLaboral.getInstancia().getCantidadEmpresasActivas());
+        setVacantesAbiertas(BolsaLaboral.getInstancia().getCantidadVacantesAbiertas());
+        setPostulacionesPendientes(BolsaLaboral.getInstancia().getCantidadPostulacionesPendientes());
+    }
 
-	private double calcularScore(Postulacion p, Vacante vacante) {
-		return requisitosMatchPorcentaje(p, vacante);
-	}
+    public void actualizarTablaPostulaciones() {
+        modeloTabla.setRowCount(0);
+        List<Postulacion> postulaciones = BolsaLaboral.getInstancia().getPostulaciones();
+        for (Postulacion p : postulaciones) {
+            String candidato = p.getCandidato().getNombre() + " " + p.getCandidato().getApellido();
+            String empresa = p.getVacante().getEmpresa().getNombre();
+            String vacante = p.getVacante().getTitulo();
+            String fecha = p.getFechaPostulacion().toString();
+            String estado = p.getEstado().toString();
+            modeloTabla.addRow(new Object[] { candidato, empresa, vacante, fecha, estado });
+        }
+    }
 
-	public void actualizarResumen() {
-		setCandidatosRegistrados(BolsaLaboral.getInstancia().getCantidadCandidatos());
-		setEmpresasActivas(BolsaLaboral.getInstancia().getCantidadEmpresasActivas());
-		setVacantesAbiertas(BolsaLaboral.getInstancia().getCantidadVacantesAbiertas());
-		setPostulacionesPendientes(BolsaLaboral.getInstancia().getCantidadPostulacionesPendientes());
-	}
+    public void setCandidatosRegistrados(int cantidad) {
+        lblCandidatosRegistrados.setText("Candidatos registrados: " + cantidad);
+    }
 
-	public void setCandidatosRegistrados(int cantidad) {
-		lblCandidatosRegistrados.setText("Candidatos registrados: " + cantidad);
-	}
+    public void setEmpresasActivas(int cantidad) {
+        lblEmpresasActivas.setText("Empresas activas: " + cantidad);
+    }
 
-	public void setEmpresasActivas(int cantidad) {
-		lblEmpresasActivas.setText("Empresas activas: " + cantidad);
-	}
+    public void setVacantesAbiertas(int cantidad) {
+        lblVacantesAbiertas.setText("Vacantes abiertas: " + cantidad);
+    }
 
-	public void setVacantesAbiertas(int cantidad) {
-		lblVacantesAbiertas.setText("Vacantes abiertas: " + cantidad);
-	}
+    public void setPostulacionesPendientes(int cantidad) {
+        lblPostulacionesPendientes.setText("Postulaciones pendientes: " + cantidad);
+    }
 
-	public void setPostulacionesPendientes(int cantidad) {
-		lblPostulacionesPendientes.setText("Postulaciones pendientes: " + cantidad);
-	}
-
-	public void agregarPostulacion(String candidato, String empresa, String vacante, String fecha, String estado) {
-		modeloTabla.addRow(new Object[] { candidato, empresa, vacante, fecha, estado });
-	}
+    public void agregarPostulacion(String candidato, String empresa, String vacante, String fecha, String estado) {
+        modeloTabla.addRow(new Object[] { candidato, empresa, vacante, fecha, estado });
+    }
 }

@@ -59,7 +59,6 @@ public class Login extends JFrame {
 		loginButton.setFocusPainted(false);
 		panel.add(loginButton);
 
-		// --- Botón Registrarse ---
 		JButton registrarseButton = new JButton("Registrarse");
 		registrarseButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		registrarseButton.setBounds(266, 320, 122, 40);
@@ -70,17 +69,10 @@ public class Login extends JFrame {
 
 		registrarseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String[] opciones = {"Candidato", "Empresa"};
-				int seleccion = JOptionPane.showOptionDialog(
-						Login.this,
-						"¿Qué tipo de usuario desea registrar?",
-						"Registro",
-						JOptionPane.DEFAULT_OPTION,
-						JOptionPane.QUESTION_MESSAGE,
-						null,
-						opciones,
-						opciones[0]
-						);
+				String[] opciones = { "Candidato", "Empresa" };
+				int seleccion = JOptionPane.showOptionDialog(Login.this, "¿Qué tipo de usuario desea registrar?",
+						"Registro", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones,
+						opciones[0]);
 				if (seleccion == 0) { // Candidato
 					RegCandidato regCandidato = new RegCandidato(null);
 					regCandidato.setVisible(true);
