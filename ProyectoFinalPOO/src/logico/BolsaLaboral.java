@@ -139,4 +139,47 @@ public class BolsaLaboral implements Serializable {
             return new ArrayList<>();
         }
     }
+
+
+    public void eliminarCandidatoPorId(String id) {
+        candidatos.removeIf(c -> c.getId().equals(id));
+        guardarLista(candidatos, ARCHIVO_CANDIDATOS);
+    }
+
+    public void eliminarEmpresaPorId(String id) {
+        empresas.removeIf(e -> e.getId().equals(id));
+        guardarLista(empresas, ARCHIVO_EMPRESAS);
+    }
+
+
+    public void guardarEmpresas() {
+        guardarLista(empresas, ARCHIVO_EMPRESAS);
+    }
+
+    public Vacante buscarVacantePorId(String id) {
+        for (Vacante v : vacantes) {
+            if (v.getId().equals(id)) {
+                return v;
+            }
+        }
+        return null;
+    }
+
+    public void eliminarVacantePorId(String id) {
+        Vacante v = buscarVacantePorId(id);
+        if (v != null) {
+            vacantes.remove(v);
+        }
+    }
+
+    public void modificarCandidato(Candidato nuevoCandidato) {
+        for (int i = 0; i < candidatos.size(); i++) {
+            if (candidatos.get(i).getId().equals(nuevoCandidato.getId())) {
+                candidatos.set(i, nuevoCandidato);
+                guardarLista(candidatos, ARCHIVO_CANDIDATOS);
+                return;
+            }
+        }
+    }
+
 }

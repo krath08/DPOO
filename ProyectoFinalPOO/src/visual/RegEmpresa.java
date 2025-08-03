@@ -5,15 +5,16 @@ import java.awt.Font;
 
 public class RegEmpresa extends JFrame {
 
-	private JTextField txtId;
-	private JTextField txtNombre;
-	private JTextField txtTelefono;
-	private JTextField txtDireccion;
-	private JTextField txtEmail;
-	private JTextField txtFechaRegistro;
-	private JTextField txtUsuario;
-	private JPasswordField txtContrasena;
-	private JComboBox<String> comboTipoEmpresa;
+	protected JTextField txtId;
+	protected JTextField txtNombre;
+	protected JTextField txtTelefono;
+	protected JTextField txtDireccion;
+	protected JTextField txtEmail;
+	protected JTextField txtFechaRegistro;
+	protected JTextField txtUsuario;
+	protected JPasswordField txtContrasena;
+	protected JComboBox<String> comboTipoEmpresa;
+
 
 	private VentanaPrincipal ventanaPrincipal;
 

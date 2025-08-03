@@ -5,20 +5,21 @@ import java.awt.*;
 
 public class RegCandidato extends JFrame {
 
-    private JTextField txtNombre;
-    private JTextField txtApellido;
-    private JTextField txtCedula;
-    private JTextField txtTelefono;
-    private JTextField txtDireccion;
-    private JTextField txtEmail;
-    private JTextField txtUsuario;
-    private JPasswordField txtContrasena;
+	protected JTextField txtNombre;
+	protected JTextField txtApellido;
+	protected JTextField txtCedula;
+	protected JTextField txtTelefono;
+	protected JTextField txtDireccion;
+	protected JTextField txtEmail;
+	protected JTextField txtUsuario;
+	protected JPasswordField txtContrasena;
 
-    private JComboBox<String> comboTipoCandidato;
+	protected JComboBox<String> comboTipoCandidato;
 
-    private JSpinner spinnerDia;
-    private JSpinner spinnerMes;
-    private JComboBox<Integer> comboAnio;
+	protected JSpinner spinnerDia;
+	protected JSpinner spinnerMes;
+	protected JComboBox<Integer> comboAnio;
+
 
     private VentanaPrincipal ventanaPrincipal;
 
@@ -219,5 +220,50 @@ public class RegCandidato extends JFrame {
             }
         });
 
+    }
+
+    protected logico.Candidato construirCandidatoDesdeCampos() {
+        String id = txtCedula.getText();
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        String cedula = txtCedula.getText();
+        String telefono = txtTelefono.getText();
+        String email = txtEmail.getText();
+        String direccion = txtDireccion.getText();
+        String usuario = txtUsuario.getText();
+        String contrasena = new String(txtContrasena.getPassword());
+
+        int dia = (int) spinnerDia.getValue();
+        int mes = (int) spinnerMes.getValue();
+        int anio = (int) comboAnio.getSelectedItem();
+
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        cal.set(anio, mes - 1, dia);
+        java.util.Date fechaNacimiento = cal.getTime();
+        java.util.Date fechaRegistro = new java.util.Date();
+
+        String tipo = comboTipoCandidato.getSelectedItem().toString();
+
+        if (tipo.equals("Universitario")) {
+            return new logico.Universitario(
+                id, nombre, apellido, cedula, telefono, email, direccion,
+                fechaNacimiento, fechaRegistro, usuario, contrasena,
+                "Universidad", "Carrera", 2024, "Título", "Especialidad"
+            );
+        } else if (tipo.equals("Técnico Superior")) {
+            return new logico.TecnicoSuperior(
+                id, nombre, apellido, cedula, telefono, email, direccion,
+                fechaNacimiento, fechaRegistro, usuario, contrasena,
+                "Instituto", "Especialidad", 2024, new java.util.ArrayList<>()
+            );
+        } else if (tipo.equals("Obrero")) {
+            return new logico.Obrero(
+                id, nombre, apellido, cedula, telefono, email, direccion,
+                fechaNacimiento, fechaRegistro, usuario, contrasena,
+                "Oficio", 5, new java.util.ArrayList<>(), new java.util.ArrayList<>()
+            );
+        }
+
+        return null;
     }
 }

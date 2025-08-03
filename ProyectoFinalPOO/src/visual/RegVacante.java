@@ -11,13 +11,14 @@ import logico.Vacante;
 import logico.empresa;
 
 public class RegVacante extends JFrame {
-	private JTextField txtId;
-	private JTextField txtTitulo;
-	private JTextField txtDescripcion;
-	private JTextField txtSalario;
-	private JComboBox<String> comboEmpresa;
-	private JTextField txtExperiencia;
-	private JComboBox<Object> comboTipoEmpleo;
+	protected JTextField txtId;
+	protected JTextField txtTitulo;
+	protected JTextField txtDescripcion;
+	protected JTextField txtSalario;
+	protected JComboBox<String> comboEmpresa;
+	protected JTextField txtExperiencia;
+	protected JComboBox<Object> comboTipoEmpleo;
+	protected JButton btnGuardar;
 
 	private VentanaPrincipal ventanaPrincipal;
 
@@ -141,7 +142,7 @@ public class RegVacante extends JFrame {
 
 		getContentPane().add(panelRequisitos);
 
-		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar = new JButton("Guardar");
 		btnGuardar.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnGuardar.setBounds(461, 599, 100, 30);
 		getContentPane().add(btnGuardar);
