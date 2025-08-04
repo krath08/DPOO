@@ -10,6 +10,8 @@ import javax.swing.border.TitledBorder;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -158,12 +160,25 @@ public class VentanaPrincipal extends JFrame {
 		itemListarPostulaciones.addActionListener(e -> {
 		    new ListarPostulaciones(this).setVisible(true);
 		});
+		
+		JMenu menuServidor = new JMenu("Servidor");
+		menuServidor.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		menuBar.add(menuServidor);
+		JMenuItem itemRespaldo = new JMenuItem("Respaldo");
+		itemRespaldo.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		itemRespaldo.addActionListener(e -> {
+		    try (Socket socket = new Socket("localhost", 5050);
+		         PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
+		        out.println("RESPALDAR");
+		        JOptionPane.showMessageDialog(this, "Respaldo creado exitosamente.");
+		    } catch (Exception ex) {
+		        JOptionPane.showMessageDialog(this, "Error al realizar respaldo: " + ex.getMessage());
+		    }
+		});
+		menuServidor.add(itemRespaldo);
 
 
-		JMenu menu_3 = new JMenu("Reportes");
-		menu_3.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/IconoReport.png")));
-		menu_3.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		menuBar.add(menu_3);
+
 
 		JPanel panelResumen = new JPanel();
 		panelResumen.setBounds(12, 28, 194, 194);
@@ -201,13 +216,10 @@ public class VentanaPrincipal extends JFrame {
 		btnBuscarCandidatos.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		JButton btnVerVacantes = new JButton("Ver Vacantes Activas");
 		btnVerVacantes.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		JButton btnReporteMensual = new JButton("Generar Reporte Mensual");
-		btnReporteMensual.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
 		panelAcciones.add(btnRegistrarCandidato);
 		panelAcciones.add(btnBuscarCandidatos);
 		panelAcciones.add(btnVerVacantes);
-		panelAcciones.add(btnReporteMensual);
 
 		JButton btnMatchVacantes = new JButton("Match de Vacantes");
 		btnMatchVacantes.setFont(new Font("SansSerif", Font.PLAIN, 14));

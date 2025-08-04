@@ -6,6 +6,7 @@ import java.awt.event.*;
 import logico.BolsaLaboral;
 import logico.Candidato;
 import logico.empresa;
+import server.Servidor;
 
 public class Login extends JFrame {
 
@@ -142,6 +143,13 @@ public class Login extends JFrame {
 	}
 
 	public static void main(String[] args) {
+		Servidor servidor = new Servidor();
+		new Servidor().start();
+
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			servidor.detenerServidor();
+		}));
+
 		SwingUtilities.invokeLater(() -> {
 			new Login().setVisible(true);
 		});
