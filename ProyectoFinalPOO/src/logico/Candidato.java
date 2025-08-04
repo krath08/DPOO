@@ -65,4 +65,37 @@ public abstract class Candidato implements Serializable {
 	public String getContrasena() {
 		return contrasena;
 	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+	public void setFechaRegistro(Date fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
 }

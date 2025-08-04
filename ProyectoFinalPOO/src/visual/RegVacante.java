@@ -39,6 +39,8 @@ public class RegVacante extends JFrame {
 
 		txtId = new JTextField();
 		txtId.setBounds(192, 25, 150, 25);
+		txtId.setEditable(false);
+		txtId.setText(BolsaLaboral.getInstancia().generarIdVacante());
 		getContentPane().add(txtId);
 
 		JLabel lblTitulo = new JLabel("Título:");

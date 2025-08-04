@@ -10,8 +10,8 @@ public class Servidor extends Thread {
     @Override
     public void run() {
         try {
-            serverSocket = new ServerSocket(5050);
-            System.out.println("Servidor de respaldo iniciado en puerto 5000");
+            serverSocket = new ServerSocket(7050);
+            System.out.println("Servidor de respaldo iniciado en puerto 7050");
 
             while (enEjecucion) {
                 try {

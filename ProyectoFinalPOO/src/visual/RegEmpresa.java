@@ -1,6 +1,9 @@
 package visual;
 
 import javax.swing.*;
+
+import logico.BolsaLaboral;
+
 import java.awt.Font;
 
 public class RegEmpresa extends JFrame {
@@ -35,6 +38,8 @@ public class RegEmpresa extends JFrame {
 
 		txtId = new JTextField();
 		txtId.setBounds(157, 43, 200, 25);
+		txtId.setEditable(false);
+		txtId.setText(BolsaLaboral.getInstancia().getNuevoIdEmpresa());
 		getContentPane().add(txtId);
 
 		JLabel lblNombre = new JLabel("Nombre:");

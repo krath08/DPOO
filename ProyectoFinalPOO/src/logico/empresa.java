@@ -70,5 +70,10 @@ public class empresa implements Serializable {
         this.tipo = tipo;
     }
 
+	public void setId(String text) {
+		// TODO Auto-generated method stub
+		
+	}
+
    
 }

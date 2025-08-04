@@ -9,6 +9,8 @@ import logico.BolsaLaboral;
 import logico.Candidato;
 import logico.Postulacion;
 import logico.Vacante;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MenuCandidato extends JFrame {
 
@@ -40,6 +42,11 @@ public class MenuCandidato extends JFrame {
         menuBar.add(menuPerfil);
 
         JMenuItem itemEditarPerfil = new JMenuItem("Editar Perfil");
+        itemEditarPerfil.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		new EditarCandidato(candidato).setVisible(true);
+        	}
+        });
         itemEditarPerfil.setIcon(new ImageIcon(MenuCandidato.class.getResource("/imagen/iconitoEditar.png")));
         itemEditarPerfil.setFont(new Font("SansSerif", Font.PLAIN, 14));
         menuPerfil.add(itemEditarPerfil);

@@ -57,6 +57,7 @@ public class VentanaPrincipal extends JFrame {
 		menuBar.add(menuSalir);
 
 		JMenuItem itemCerrarSesion = new JMenuItem("Cerrar sesión");
+		itemCerrarSesion.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconitoSalir.png")));
 		itemCerrarSesion.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		menuSalir.add(itemCerrarSesion);
 
@@ -77,6 +78,7 @@ public class VentanaPrincipal extends JFrame {
 		menuCandidatos.add(itemRegistrarCandidato);
 
 		JMenuItem itemListarCandidatos = new JMenuItem("Listar/Modificar Candidatos");
+		itemListarCandidatos.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconitoEditar.png")));
 		itemListarCandidatos.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		menuCandidatos.add(itemListarCandidatos);
 
@@ -101,6 +103,7 @@ public class VentanaPrincipal extends JFrame {
 		menuEmpresa.add(itemRegistrarEmpresa);
 
 		JMenuItem itemListarEmpresas = new JMenuItem("Listar/Modificar Empresa");
+		itemListarEmpresas.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconitoEditar.png")));
 		itemListarEmpresas.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		menuEmpresa.add(itemListarEmpresas);
 
@@ -132,6 +135,7 @@ public class VentanaPrincipal extends JFrame {
 		});
 
 		JMenuItem mntmListarModificarVacantes = new JMenuItem("Listar/Modificar Vacantes");
+		mntmListarModificarVacantes.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconitoEditar.png")));
 		mntmListarModificarVacantes.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		mntmListarModificarVacantes.addActionListener(e -> {
 			new ListarVacantes(this).setVisible(true);
@@ -154,6 +158,7 @@ public class VentanaPrincipal extends JFrame {
 		});
 		
 		JMenuItem itemListarPostulaciones = new JMenuItem("Listar/Modificar Postulaciones");
+		itemListarPostulaciones.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconitoEditar.png")));
 		itemListarPostulaciones.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		menu_2.add(itemListarPostulaciones);
 
@@ -162,12 +167,14 @@ public class VentanaPrincipal extends JFrame {
 		});
 		
 		JMenu menuServidor = new JMenu("Servidor");
+		menuServidor.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconoServidor.png")));
 		menuServidor.setFont(new Font("SansSerif", Font.PLAIN, 16));
 		menuBar.add(menuServidor);
 		JMenuItem itemRespaldo = new JMenuItem("Respaldo");
+		itemRespaldo.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/iconitoServidor.png")));
 		itemRespaldo.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		itemRespaldo.addActionListener(e -> {
-		    try (Socket socket = new Socket("localhost", 5050);
+		    try (Socket socket = new Socket("localhost", 7050);
 		         PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 		        out.println("RESPALDAR");
 		        JOptionPane.showMessageDialog(this, "Respaldo creado exitosamente.");
@@ -207,24 +214,24 @@ public class VentanaPrincipal extends JFrame {
 		panelAcciones.setLayout(new GridLayout(5, 1, 10, 10));
 
 		JButton btnRegistrarCandidato = new JButton("Registrar Nuevo Candidato");
-		btnRegistrarCandidato.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		btnRegistrarCandidato.addActionListener(e -> {
-			RegCandidato ventana = new RegCandidato(this);
-			ventana.setVisible(true);
-		});
-		JButton btnBuscarCandidatos = new JButton("Buscar Candidatos");
-		btnBuscarCandidatos.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		JButton btnVerVacantes = new JButton("Ver Vacantes Activas");
-		btnVerVacantes.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        btnRegistrarCandidato.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        btnRegistrarCandidato.addActionListener(e -> {
+            RegCandidato ventana = new RegCandidato(this);
+            ventana.setVisible(true);
+        });
+        panelAcciones.add(btnRegistrarCandidato);
 
-		panelAcciones.add(btnRegistrarCandidato);
-		panelAcciones.add(btnBuscarCandidatos);
-		panelAcciones.add(btnVerVacantes);
+        JButton btnVerVacantes = new JButton("Ver Vacantes Activas");
+        btnVerVacantes.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        btnVerVacantes.addActionListener(e -> {
+            new ListarVacantes(this).setVisible(true);
+        });
+        panelAcciones.add(btnVerVacantes);
 
-		JButton btnMatchVacantes = new JButton("Match de Vacantes");
-		btnMatchVacantes.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		panelAcciones.add(btnMatchVacantes);
-		btnMatchVacantes.addActionListener(e -> mostrarVentanaMatch());
+        JButton btnMatchVacantes = new JButton("Match de Vacantes");
+        btnMatchVacantes.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        btnMatchVacantes.addActionListener(e -> mostrarVentanaMatch());
+        panelAcciones.add(btnMatchVacantes);
 
 		fondoPanel.add(panelAcciones);
 

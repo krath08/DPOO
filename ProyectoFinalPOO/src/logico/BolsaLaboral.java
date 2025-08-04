@@ -8,6 +8,8 @@ public class BolsaLaboral implements Serializable {
     private static final long serialVersionUID = 1L;
     private static BolsaLaboral instancia;
 
+    private int countIdEmpresa;
+    private int countIdVacante;
     private List<empresa> empresas;
     private List<Candidato> candidatos;
     private List<Vacante> vacantes;
@@ -200,5 +202,25 @@ public class BolsaLaboral implements Serializable {
             }
         }
     }
+    public String getNuevoIdEmpresa() {
+        int max = -1;
+        for (empresa e : empresas) {
+            String id = e.getId();
+            if (id != null && id.startsWith("E-")) {
+                try {
+                    int num = Integer.parseInt(id.substring(2));
+                    if (num > max) max = num;
+                } catch (Exception ex) {}
+            }
+        }
+        return "E-" + (max + 1);
+    }
+
+    public String generarIdVacante() {
+        String id = "V-" + countIdVacante;
+        countIdVacante++;
+        return id;
+    }
+
 
 }
