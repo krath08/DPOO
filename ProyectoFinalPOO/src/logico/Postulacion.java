@@ -22,7 +22,7 @@ public class Postulacion implements Serializable{
 		this.fechaPostulacion = fechaPostulacion;
 		this.estado = estado;
 		this.comentarios = comentarios;
-	    this.requisitosCumplidos = requisitosCumplidos;
+		this.requisitosCumplidos = requisitosCumplidos;
 
 	}
 
@@ -48,9 +48,32 @@ public class Postulacion implements Serializable{
 
 	public String getComentarios() {
 		return comentarios;
-		
+
 	}
 	public List<String> getRequisitosCumplidos() {
-	    return requisitosCumplidos;
+		return requisitosCumplidos;
+	}
+	public void setCandidato(Candidato candidato) {
+		this.candidato = candidato;
+	}
+
+	public void setVacante(Vacante vacante) {
+		this.vacante = vacante;
+	}
+
+	public void setFechaPostulacion(Date fechaPostulacion) {
+		this.fechaPostulacion = fechaPostulacion;
+	}
+
+	public void setEstado(EstadoPostulacion estado) {
+		this.estado = estado;
+	}
+
+	public void setComentarios(String comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public void setRequisitosCumplidos(List<String> requisitosCumplidos) {
+		this.requisitosCumplidos = requisitosCumplidos;
 	}
 }

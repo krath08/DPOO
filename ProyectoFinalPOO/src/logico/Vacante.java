@@ -75,4 +75,28 @@ public class Vacante implements Serializable {
     public int getExperienciaRequerida() {
         return experienciaRequerida;
     }
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+
+    public void setTipoEmpleo(TipoEmpleo tipoEmpleo) {
+        this.tipoEmpleo = tipoEmpleo;
+    }
+
+    public void setExperiencia(int experiencia) {
+        this.experienciaRequerida = experiencia;
+    }
+
+    public int getExperiencia() {
+        return experienciaRequerida;
+    }
+
 }

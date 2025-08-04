@@ -132,7 +132,7 @@ public class VentanaPrincipal extends JFrame {
 		JMenuItem mntmListarModificarVacantes = new JMenuItem("Listar/Modificar Vacantes");
 		mntmListarModificarVacantes.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		mntmListarModificarVacantes.addActionListener(e -> {
-			new ListarVacantes().setVisible(true);
+			new ListarVacantes(this).setVisible(true);
 		});
 		menu_1.add(mntmListarModificarVacantes);
 
@@ -150,6 +150,15 @@ public class VentanaPrincipal extends JFrame {
 			ventana.setVisible(true);
 			actualizarTablaPostulaciones();
 		});
+		
+		JMenuItem itemListarPostulaciones = new JMenuItem("Listar/Modificar Postulaciones");
+		itemListarPostulaciones.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		menu_2.add(itemListarPostulaciones);
+
+		itemListarPostulaciones.addActionListener(e -> {
+		    new ListarPostulaciones(this).setVisible(true);
+		});
+
 
 		JMenu menu_3 = new JMenu("Reportes");
 		menu_3.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagen/IconoReport.png")));

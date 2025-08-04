@@ -156,6 +156,10 @@ public class BolsaLaboral implements Serializable {
         guardarLista(empresas, ARCHIVO_EMPRESAS);
     }
 
+    public void guardarPostulaciones() {
+        guardarLista(postulaciones, ARCHIVO_POSTULACIONES);
+    }
+
     public Vacante buscarVacantePorId(String id) {
         for (Vacante v : vacantes) {
             if (v.getId().equals(id)) {
@@ -164,6 +168,16 @@ public class BolsaLaboral implements Serializable {
         }
         return null;
     }
+    
+    public Postulacion buscarPostulacionPorId(String id) {
+        for (Postulacion p : postulaciones) {
+            if (p.getId().equals(id)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
 
     public void eliminarVacantePorId(String id) {
         Vacante v = buscarVacantePorId(id);
@@ -172,6 +186,11 @@ public class BolsaLaboral implements Serializable {
         }
     }
 
+    public void eliminarPostulacionPorId(String id) {
+        postulaciones.removeIf(p -> p.getId().equals(id));
+        guardarLista(postulaciones, ARCHIVO_POSTULACIONES);
+    }
+    
     public void modificarCandidato(Candidato nuevoCandidato) {
         for (int i = 0; i < candidatos.size(); i++) {
             if (candidatos.get(i).getId().equals(nuevoCandidato.getId())) {

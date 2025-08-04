@@ -1,17 +1,18 @@
-
 package visual;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import logico.*;
-import java.awt.event.*;
 import java.util.List;
 
 public class ListarVacantes extends JFrame {
     private JTable table;
     private DefaultTableModel model;
+    private VentanaPrincipal ventanaPrincipal;
 
-    public ListarVacantes() {
+    public ListarVacantes(VentanaPrincipal ventanaPrincipal) {
+        this.ventanaPrincipal = ventanaPrincipal;
+
         setTitle("Lista de Vacantes");
         setSize(800, 400);
         setLocationRelativeTo(null);
@@ -43,7 +44,7 @@ public class ListarVacantes extends JFrame {
                 String id = model.getValueAt(fila, 0).toString();
                 Vacante v = BolsaLaboral.getInstancia().buscarVacantePorId(id);
                 if (v != null) {
-                    new ModVacante(v).setVisible(true);
+                    new ModVacante(v, ventanaPrincipal).setVisible(true);
                     dispose();
                 }
             } else {
@@ -57,6 +58,9 @@ public class ListarVacantes extends JFrame {
                 String id = model.getValueAt(fila, 0).toString();
                 BolsaLaboral.getInstancia().eliminarVacantePorId(id);
                 cargarVacantes();
+                if (ventanaPrincipal != null) {
+                    ventanaPrincipal.actualizarResumen();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione una vacante para eliminar");
             }
@@ -67,7 +71,13 @@ public class ListarVacantes extends JFrame {
         model.setRowCount(0);
         List<Vacante> vacantes = BolsaLaboral.getInstancia().getVacantes();
         for (Vacante v : vacantes) {
-            model.addRow(new Object[]{v.getId(), v.getTitulo(), v.getEmpresa().getNombre(), v.getSalario(), v.getTipoEmpleo()});
+            model.addRow(new Object[]{
+                v.getId(),
+                v.getTitulo(),
+                v.getEmpresa().getNombre(),
+                v.getSalario(),
+                v.getTipoEmpleo()
+            });
         }
     }
 }
